@@ -1,0 +1,188 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+  --primary-color: #2563eb; /* Biru Modern */
+  --secondary-color: #1e40af;
+  --accent-color: #f59e0b;
+  --text-dark: #1f2937;
+  --text-light: #f3f4f6;
+  --white: #ffffff;
+}
+
+body {
+  line-height: 1.6;
+  color: var(--text-dark);
+}
+
+/* --- MULAI BAGIAN NAVBAR --- */
+.navbar {
+  background-color: var(--white);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 1rem 0;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;           /* Lebar konsisten 90% layar */
+  max-width: 1200px;    /* Maksimal lebar agar tidak terlalu melar di layar besar */
+  margin: 0 auto;       /* Posisi selalu di tengah (center) */
+  padding: 0 20px;      /* Tambahan padding agar tidak mepet pinggir */
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 30px;            /* INI KUNCINYA: Jarak antar menu dibuat fix 30px */
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 500;
+  transition: 0.3s;
+  font-size: 1rem;      /* Ukuran font standar */
+  padding: 5px 0;       /* Sedikit ruang atas bawah */
+}
+
+/* Efek Hover dan Active agar lebih jelas */
+.nav-links a:hover, 
+.nav-links a.active {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color); /* Garis bawah saat aktif */
+}
+
+.btn-chat-nav {
+  background-color: var(--primary-color);
+  color: var(--white) !important;
+  padding: 8px 20px !important; /* Padding tombol chat lebih besar */
+  border-radius: 25px;
+  border-bottom: none !important; /* Hilangkan garis bawah khusus tombol ini */
+}
+
+.btn-chat-nav:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+/* Menghilangkan Garis Tiga */
+#check, 
+.checkbtn, 
+.fa-bars {
+  display: none !important; 
+}
+
+/* --- PENGATURAN KONTEN HALAMAN (Profil, Modul, Tugas) --- */
+/* Class ini memastikan semua halaman punya lebar yang sama dengan Navbar */
+.content-container {
+  max-width: 1000px; /* Sama dengan Navbar */
+  margin: 40px auto;
+  padding: 0 20px;
+  width: 90%;
+}
+
+/* Hero Section (Home) */
+.hero {
+  height: 100vh;
+  background: linear-gradient(rgba(37, 99, 235, 0.9), rgba(30, 64, 175, 0.8)), 
+              url('https://source.unsplash.com/random/1920x1080/?mathematics') no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--white);
+  padding: 0 20px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Tombol */
+.hero-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 12px 30px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+}
+
+.btn-primary {
+  background-color: var(--white);
+  color: var(--primary-color);
+}
+
+.btn-secondary {
+  border: 2px solid var(--white);
+  color: var(--white);
+}
+
+.btn-chatbot {
+  background-color: var(--accent-color);
+  color: var(--white);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #111827;
+  color: #9ca3af;
+  margin-top: auto;
+}
+
+.hero-description {
+  text-align: justify;       
+  text-justify: inter-word;  
+  max-width: 1000px; /* UBAH INI: Disamakan 1000px agar lurus dengan navbar */         
+  margin-left: auto;      
+  margin-right: auto;     
+  margin-bottom: 1rem; 
+  font-size: 1.1rem;         
+  line-height: 1.8;          
+  color: #f3f4f6;            
+}
+
+.hero-description:last-of-type {
+  margin-bottom: 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .hero-description {
+    text-align: left;        
+    font-size: 1rem;
+    padding: 0 15px;         
+  }
+}

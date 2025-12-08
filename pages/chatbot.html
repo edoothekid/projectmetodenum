@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asisten AI - Metode Numerik</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <style>
+    /* Styling Sederhana untuk Container Chat */
+    .chat-wrapper {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      overflow: hidden;
+      min-height: 80vh; /* Agar tinggi */
+      padding: 20px;
+      position: relative;
+    }
+
+    /* CSS tambahan agar tampilan chat dari JS terlihat bagus */
+    #chat-container {
+      display: flex;
+      flex-direction: column;
+      height: 60vh;
+      margin-top: 20px;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+    }
+
+    #chat-window {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      background: #f9fafb;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #chat-input-area {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      background: white;
+    }
+
+    #chat-input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    .game-button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .game-button:hover { background: #1d4ed8; }
+
+    /* Bubble Chat Styles */
+    .chat-bubble {
+      padding: 10px 15px;
+      border-radius: 10px;
+      max-width: 80%;
+      line-height: 1.5;
+    }
+    .chat-bubble.ai {
+      background: #e0f2fe;
+      color: #0c4a6e;
+      align-self: flex-start;
+    }
+    .chat-bubble.user {
+      background: #2563eb;
+      color: white;
+      align-self: flex-end;
+    }
+    .typing { font-style: italic; color: #666; }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <h2 class="logo">Numerik<span>Lab</span></h2>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="profil.html">Profile MK</a></li>
+        <li><a href="modul/pendahuluan.html">Modul</a></li>
+        <li><a href="tugas.html">Tugas</a></li>
+        <li><a href="pengembang.html">Tim Pengembang</a></li>
+        <li><a href="chatbot.html" class="active btn-chat-nav"><i class="fas fa-robot"></i> AI Asisten</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="chat-wrapper" id="chatbot-main-container">
+    </div>
+
+  <script src="../js/chatbot.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('chatbot-main-container');
+        
+        // Memulai AI Consultant
+        if (typeof aiConsultant !== 'undefined') {
+            aiConsultant.init(container);
+        } else {
+            container.innerHTML = '<p style="color:red; text-align:center;">Gagal memuat sistem AI. Pastikan file js/chatbot.js sudah dibuat.</p>';
+        }
+
+        // Tombol tutup (Opsional, redirect ke home)
+        document.addEventListener('click', function(e) {
+            if(e.target && e.target.hasAttribute('data-close')){
+                window.location.href = '../index.html';
+            }
+        });
+    });
+  </script>
+
+</body>
+</html>

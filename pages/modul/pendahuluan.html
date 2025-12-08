@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modul Pembelajaran - Metode Numerik</title>
+  
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    /* Styling Khusus Halaman Modul */
+    .module-header {
+      background-color: #f0f9ff;
+      padding: 60px 20px;
+      text-align: center;
+      border-bottom: 1px solid #e0f2fe;
+    }
+    
+    .module-header h1 {
+      color: #1e40af;
+      margin-bottom: 15px;
+      font-size: 2.5rem;
+      font-weight: 800;
+    }
+
+    .module-intro {
+      max-width: 800px;
+      margin: 0 auto;
+      color: #4b5563;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      max-width: 1280px;
+      margin: 0 auto 60px auto;
+      padding: 0 20px;
+    }
+
+    .module-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #f3f4f6;
+    }
+
+    .module-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-image-wrapper {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+      background-color: #e5e7eb;
+    }
+
+    .card-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .module-card:hover .card-image-wrapper img {
+      transform: scale(1.05);
+    }
+
+    .card-content {
+      padding: 25px;
+      flex-grow: 1; 
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-number {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #f59e0b;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .card-desc {
+      color: #6b7280;
+      font-size: 0.95rem;
+      margin-bottom: 25px;
+      line-height: 1.6;
+      flex-grow: 1;
+    }
+
+    .btn-download-modul {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      text-align: center;
+      background: linear-gradient(to right, #f59e0b, #d97706);
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-download-modul:hover {
+      background: linear-gradient(to right, #d97706, #b45309);
+      box-shadow: 0 6px 8px -1px rgba(245, 158, 11, 0.5);
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <h2 class="logo">Numerik<span>Lab</span></h2>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../profil.html">Profile MK</a></li>
+        <li><a href="pendahuluan.html" class="active">Modul</a></li>
+        <li><a href="../tugas.html">Tugas</a></li>
+        <li><a href="../pengembang.html">Tim Pengembang</a></li>
+        <li><a href="../chatbot.html" class="btn-chat-nav"><i class="fas fa-robot"></i> AI Asisten</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="module-header">
+    <h1>Perpustakaan Modul</h1>
+    <p class="module-intro">
+        Akses materi pembelajaran lengkap mulai dari Konsep Galat & Deret Taylor, Akar Persamaan Non-Linear hingga Masalah Nilai Awal (PDB).
+    </p>
+
+    <p class="module-intro"></p>
+        Klik tombol di bawah untuk membaca materi.
+    </p>
+  </header>
+
+  <div class="module-grid">
+
+    <div class="module-card">
+      <div class="card-image-wrapper">
+        <img src="../../images/cover1.jpg" alt="Cover Modul 1" onerror="this.src='https://via.placeholder.com/400x200?text=Cover+Modul+1'">
+      </div>
+      <div class="card-content">
+        <span class="card-number">Modul 01</span>
+        <h3 class="card-title">Konsep Galat & Deret Taylor</h3>
+        <p class="card-desc">
+          Mempelajari definisi error, sumber kesalahan numerik, error pemotongan (truncation), serta penggunaan Polinomial Taylor.
+        </p>
+        <a href="https://drive.google.com/file/d/1wLHOGmsCd-80zW8lhXKysW_Xl39F5iCg/view?usp=sharing" class="btn-download-modul" target="_blank">
+          <i class="fas fa-file-pdf"></i> Baca / Unduh PDF
+        </a>
+      </div>
+    </div>
+
+    <div class="module-card">
+      <div class="card-image-wrapper">
+        <img src="../../images/cover2.jpg" alt="Cover Modul 2" onerror="this.src='https://via.placeholder.com/400x200?text=Cover+Modul+2'">
+      </div>
+      <div class="card-content">
+        <span class="card-number">Modul 02</span>
+        <h3 class="card-title">Akar Persamaan Non-Linear</h3>
+        <p class="card-desc">
+          Teknik mencari akar persamaan f(x)=0 menggunakan Metode Tertutup (Bisection) dan Metode Terbuka (Iterasi Titik Tetap).
+        </p>
+        <a href="https://drive.google.com/file/d/1uJOttUTyK80eHflPoN5RAu3u51p_kkhD/view?usp=sharing" class="btn-download-modul" target="_blank">
+          <i class="fas fa-file-pdf"></i> Baca / Unduh PDF
+        </a>
+      </div>
+    </div>
+
+    <div class="module-card">
+      <div class="card-image-wrapper">
+        <img src="../../images/cover3.jpg" alt="Cover Modul 3" onerror="this.src='https://via.placeholder.com/400x200?text=Cover+Modul+3'">
+      </div>
+      <div class="card-content">
+        <span class="card-number">Modul 03</span>
+        <h3 class="card-title">Interpolasi Polinomial</h3>
+        <p class="card-desc">
+          Menentukan fungsi pendekatan berdasarkan titik data. Mencakup Interpolasi Linear, Kuadratik, dan Beda Bagi Newton.
+        </p>
+        <a href="https://drive.google.com/file/d/11uvZ-RD5JD57nTxzQ374tvqOF62r42au/view?usp=sharing" class="btn-download-modul" target="_blank">
+          <i class="fas fa-file-pdf"></i> Baca / Unduh PDF
+        </a>
+      </div>
+    </div>
+
+    <div class="module-card">
+      <div class="card-image-wrapper">
+        <img src="../../images/cover4.jpg" alt="Cover Modul 4" onerror="this.src='https://via.placeholder.com/400x200?text=Cover+Modul+4'">
+      </div>
+      <div class="card-content">
+        <span class="card-number">Modul 04</span>
+        <h3 class="card-title">Integrasi Numerik</h3>
+        <p class="card-desc">
+          Menghitung luas daerah di bawah kurva secara numerik menggunakan Metode Pias, Aturan Trapesium, dan Simpson.
+        </p>
+        <a href="https://drive.google.com/file/d/1IBaGJi_bnkJOEBQ6CYvsYdUy1nTHXe1M/view?usp=sharing" class="btn-download-modul" target="_blank">
+          <i class="fas fa-file-pdf"></i> Baca / Unduh PDF
+        </a>
+      </div>
+    </div>
+
+    <div class="module-card">
+      <div class="card-image-wrapper">
+        <img src="../../images/cover5.jpg" alt="Cover Modul 5" onerror="this.src='https://via.placeholder.com/400x200?text=Cover+Modul+5'">
+      </div>
+      <div class="card-content">
+        <span class="card-number">Modul 05</span>
+        <h3 class="card-title">Masalah Nilai Awal (PDB)</h3>
+        <p class="card-desc">
+          Solusi numerik PDB orde satu menggunakan Metode Euler, Metode Heun, dan Metode Runge-Kutta.
+        </p>
+        <a href="https://drive.google.com/file/d/1qgo8uK_D7Yn-O2X-bBuNj5M9ceuidRsE/view?usp=drive_link" class="btn-download-modul" target="_blank">
+          <i class="fas fa-file-pdf"></i> Baca / Unduh PDF
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2025 E-Learning Metode Numerik. Universitas Sebelas Maret.</p>
+  </footer>
+
+</body>
+</html>
