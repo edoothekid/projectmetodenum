@@ -1,4 +1,6 @@
-/* Reset CSS */
+/* =========================================
+   1. RESET & VARIABEL UTAMA
+   ========================================= */
 * {
   margin: 0;
   padding: 0;
@@ -7,27 +9,33 @@
 }
 
 :root {
-  --primary-color: #2563eb; /* Biru Modern */
-  --secondary-color: #1e40af;
-  --accent-color: #f59e0b;
-  --text-dark: #1f2937;
-  --text-light: #f3f4f6;
+  --primary-color: #2563eb;   /* Biru Modern */
+  --secondary-color: #1e40af; /* Biru Gelap */
+  --accent-color: #f59e0b;    /* Oranye/Emas */
+  --text-dark: #1f2937;       /* Hitam Abu */
+  --text-light: #f3f4f6;      /* Putih Abu */
   --white: #ffffff;
 }
 
 body {
   line-height: 1.6;
   color: var(--text-dark);
+  background-color: #f8fafc; /* Background global sedikit abu agar modern */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Agar footer selalu di bawah */
 }
 
-/* --- MULAI BAGIAN NAVBAR --- */
+/* =========================================
+   2. NAVBAR (NAVIGASI)
+   ========================================= */
 .navbar {
   background-color: var(--white);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* Shadow lebih halus */
   position: sticky;
   top: 0;
   z-index: 1000;
-  padding: 1rem 0;
+  padding: 0.8rem 0; /* Padding sedikit dikecilkan agar rapi */
 }
 
 .nav-container {
@@ -35,154 +43,205 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 90%;           /* Lebar konsisten 90% layar */
-  max-width: 1200px;    /* Maksimal lebar agar tidak terlalu melar di layar besar */
-  margin: 0 auto;       /* Posisi selalu di tengah (center) */
-  padding: 0 20px;      /* Tambahan padding agar tidak mepet pinggir */
+  max-width: 1000px;    /* Maksimal lebar 1000px (LURUS dengan konten) */
+  margin: 0 auto;       /* Posisi tengah */
 }
 
+.logo {
+  color: var(--primary-color);
+  font-weight: 800;
+  font-size: 1.5rem;
+}
+
+.logo span {
+  color: var(--text-dark); /* Variasi warna pada teks logo */
+}
+
+/* MENU LINKS (Tombol Navigasi) */
 .nav-links {
   list-style: none;
   display: flex;
+  gap: 10px; /* Jarak antar menu */
   align-items: center;
-  gap: 30px;            /* INI KUNCINYA: Jarak antar menu dibuat fix 30px */
 }
 
 .nav-links a {
   text-decoration: none;
-  color: var(--text-dark);
-  font-weight: 500;
-  transition: 0.3s;
-  font-size: 1rem;      /* Ukuran font standar */
-  padding: 5px 0;       /* Sedikit ruang atas bawah */
+  color: #64748b; /* Abu-abu sejuk (Slate 500) */
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  border-radius: 50px; /* Bentuk kapsul */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Efek Hover dan Active agar lebih jelas */
-.nav-links a:hover, 
-.nav-links a.active {
-  color: var(--primary-color);
-  border-bottom: 2px solid var(--primary-color); /* Garis bawah saat aktif */
+/* Efek Hover & Active untuk Menu Biasa */
+.nav-links a:not(.btn-chat-nav):hover, 
+.nav-links a:not(.btn-chat-nav).active {
+  background: linear-gradient(135deg, #eff6ff, #e0e7ff);
+  color: #2563eb;
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.1);
+  transform: translateY(-1px);
 }
 
+/* Tombol Khusus AI Asisten */
 .btn-chat-nav {
-  background-color: var(--primary-color);
-  color: var(--white) !important;
-  padding: 8px 20px !important; /* Padding tombol chat lebih besar */
-  border-radius: 25px;
-  border-bottom: none !important; /* Hilangkan garis bawah khusus tombol ini */
+  background: linear-gradient(135deg, #3b82f6, #6366f1); 
+  color: white !important;
+  padding: 8px 20px !important;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .btn-chat-nav:hover {
-  background-color: var(--secondary-color);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+  transform: translateY(-2px) scale(1.02);
 }
 
-/* Menghilangkan Garis Tiga */
-#check, 
-.checkbtn, 
-.fa-bars {
+/* Sembunyikan elemen mobile (Hamburger menu) di tampilan desktop */
+#check, .checkbtn, .fa-bars {
   display: none !important; 
 }
 
-/* --- PENGATURAN KONTEN HALAMAN (Profil, Modul, Tugas) --- */
-/* Class ini memastikan semua halaman punya lebar yang sama dengan Navbar */
-.content-container {
-  max-width: 1000px; /* Sama dengan Navbar */
-  margin: 40px auto;
-  padding: 0 20px;
-  width: 90%;
-}
-
-/* Hero Section (Home) */
+/* =========================================
+   3. HERO SECTION (HALAMAN HOME)
+   ========================================= */
 .hero {
-  height: 100vh;
-  background: linear-gradient(rgba(37, 99, 235, 0.9), rgba(30, 64, 175, 0.8)), 
-              url('https://source.unsplash.com/random/1920x1080/?mathematics') no-repeat center center/cover;
+  height: 90vh;
+  /* Background Putih Terang dengan overlay gambar tipis */
+  background: linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9)), 
+              url('https://source.unsplash.com/random/1920x1080/?technology,lab') no-repeat center center/cover;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: var(--white);
+  color: #000000; /* Teks Hitam Pekat */
   padding: 0 20px;
 }
 
-.hero h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+/* Judul Besar di Home */
+.highlight-title {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 10px rgba(37, 99, 235, 0.1);
 }
 
-.hero p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+/* Deskripsi Teks di Home */
+.hero-description {
+  text-align: justify;       
+  text-justify: inter-word;  
+  max-width: 1000px; /* Lurus dengan navbar */        
+  margin-left: auto;      
+  margin-right: auto;     
+  margin-bottom: 2rem; 
+  font-size: 1.15rem;         
+  line-height: 1.8;          
+  color: #1f2937 !important; /* Abu Gelap Jelas */
 }
 
-/* Tombol */
+.hero-description p {
+  margin-bottom: 15px;
+}
+
+.hero-description strong {
+  color: var(--primary-color);
+}
+
+/* Tombol di Hero (Jika ada) */
 .hero-buttons {
   display: flex;
   gap: 15px;
   justify-content: center;
   flex-wrap: wrap;
+  margin-top: 30px;
 }
 
 .btn {
   padding: 12px 30px;
-  border-radius: 5px;
+  border-radius: 8px;
   text-decoration: none;
   font-weight: bold;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .btn:hover {
   transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .btn-primary {
-  background-color: var(--white);
-  color: var(--primary-color);
+  background-color: var(--primary-color);
+  color: white;
 }
 
 .btn-secondary {
-  border: 2px solid var(--white);
-  color: var(--white);
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  background: transparent;
+}
+
+.btn-secondary:hover {
+  background-color: var(--primary-color);
+  color: white;
 }
 
 .btn-chatbot {
   background-color: var(--accent-color);
-  color: var(--white);
+  color: white;
 }
 
-/* Footer */
+/* =========================================
+   4. LAYOUT KONTEN UMUM (Untuk Profile, Modul, dll)
+   ========================================= */
+.content-container {
+  max-width: 1000px; /* Konsisten dengan Navbar */
+  margin: 40px auto;
+  padding: 0 20px;
+  width: 90%;
+  flex: 1; /* Agar konten mengisi ruang sisa (biar footer di bawah) */
+}
+
+/* =========================================
+   5. FOOTER
+   ========================================= */
 footer {
   text-align: center;
-  padding: 20px;
-  background-color: #111827;
-  color: #9ca3af;
-  margin-top: auto;
+  padding: 25px 20px;
+  background-color: #1e293b; /* Warna Slate Gelap */
+  color: #94a3b8;
+  margin-top: auto; /* Memaksa footer ke paling bawah */
+  font-size: 0.9rem;
 }
 
-.hero-description {
-  text-align: justify;       
-  text-justify: inter-word;  
-  max-width: 1000px; /* UBAH INI: Disamakan 1000px agar lurus dengan navbar */         
-  margin-left: auto;      
-  margin-right: auto;     
-  margin-bottom: 1rem; 
-  font-size: 1.1rem;         
-  line-height: 1.8;          
-  color: #f3f4f6;            
-}
-
-.hero-description:last-of-type {
-  margin-bottom: 2.5rem;
-}
-
+/* =========================================
+   6. RESPONSIF (HP / LAYAR KECIL)
+   ========================================= */
 @media (max-width: 768px) {
   .hero-description {
     text-align: left;        
     font-size: 1rem;
     padding: 0 15px;         
+  }
+  
+  .highlight-title {
+    font-size: 2.5rem;
+  }
+
+  .nav-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }

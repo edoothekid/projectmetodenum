@@ -3,47 +3,148 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>E-Learning Metode Numerik</title>
+  <title>NumerikLab - E-Learning Metode Numerik</title>
+  
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    /* Style Khusus Home agar senada dengan Tim Pengembang */
+    body { background-color: #f8fafc; }
+
+    /* Header Gradient Modern */
+    .home-header {
+      background: linear-gradient(135deg, #2563eb, #1e40af); /* Biru Modern */
+      color: white;
+      padding: 100px 20px 80px;
+      text-align: center;
+      border-radius: 0 0 50px 50px; /* Lengkungan bawah yang estetis */
+      margin-bottom: 50px;
+      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+    }
+
+    .home-header h1 { 
+      font-size: 3.5rem; 
+      font-weight: 800; 
+      margin-bottom: 15px; 
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .home-header p { 
+      font-size: 1.2rem; 
+      opacity: 0.95; 
+      max-width: 800px; 
+      margin: 0 auto; 
+      line-height: 1.8;
+      text-align: justify; /* UBAH: Teks dibuat rata kiri-kanan */
+    }
+
+    /* Container Kartu Menu */
+    .home-container {
+      max-width: 1000px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    /* Card Menu Style (Mirip Tim Pengembang) */
+    .menu-card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      border-top: 5px solid #2563eb;
+      text-decoration: none;
+      color: #1f2937;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(37, 99, 235, 0.15);
+    }
+
+    .icon-wrapper {
+      width: 70px;
+      height: 70px;
+      background-color: #eff6ff;
+      color: #2563eb;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      transition: 0.3s;
+    }
+
+    .menu-card:hover .icon-wrapper {
+      background-color: #2563eb;
+      color: white;
+    }
+
+    .menu-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; }
+    .menu-desc { font-size: 0.95rem; color: #6b7280; line-height: 1.5; }
+  </style>
 </head>
 
 <body>
 
-    <nav class="navbar">
-    <div class="nav-container"> <h2 class="logo">Numerik<span>Lab</span></h2>
-        <ul class="nav-links">
+  <nav class="navbar">
+    <div class="nav-container">
+      <h2 class="logo">Numerik<span>Lab</span></h2>
+      <ul class="nav-links">
         <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="pages/profil.html">Profile MK</a></li> <li><a href="pages/modul/pendahuluan.html">Modul</a></li>
+        <li><a href="pages/profile.html">Profile MK</a></li>
+        <li><a href="pages/modul/pendahuluan.html">Modul</a></li>
         <li><a href="pages/tugas.html">Tugas</a></li>
         <li><a href="pages/pengembang.html">Tim Pengembang</a></li>
         <li><a href="pages/chatbot.html" class="btn-chat-nav"><i class="fas fa-robot"></i> AI Asisten</a></li>
-        </ul>
-        <div class="hamburger">
-        <i class="fas fa-bars"></i>
-        </div>
+      </ul>
     </div>
-    </nav>
+  </nav>
 
-  <header class="hero">
-    <div class="hero-content">
-        <h1>E-Learning Metode Numerik</h1>
-        
-        <p class="hero-description">
-        Selamat datang di platform E-Learning Metode Numerik, media pembelajaran interaktif yang dirancang untuk menjembatani teori matematika dengan implementasi komputasi modern. Website ini menyediakan materi komprehensif mulai dari analisis galat, pencarian akar persamaan, hingga integrasi numerik untuk membantu Anda memahami penyelesaian masalah matematis yang kompleks.
-        </p>
-
-        <p class="hero-description">
-        Melalui modul terstruktur, latihan soal yang adaptif, dan dukungan Chatbot AI cerdas, Anda dapat belajar secara mandiri untuk menguasai algoritma numerik dan penerapannya dalam penyelesaian kasus-kasus nyata di bidang sains dan teknik.
-        </p>
-
-    </div>
+  <header class="home-header">
+    <h1>NumerikLab</h1>
+    <p>
+      Selamat datang di platform E-Learning Metode Numerik, sebuah media pembelajaran interaktif yang dirancang untuk membantu menghubungkan konsep matematika dengan penerapannya dalam komputasi modern. Di dalamnya tersedia materi yang tersusun rapi, mulai dari analisis galat, pencarian akar persamaan, hingga integrasi numerik, sehingga Anda dapat memahami bagaimana berbagai masalah matematis dapat diselesaikan secara efektif.
+    </p>
+    <br>
+    <p>      
+      Melalui modul yang terstruktur dengan jelas, latihan soal yang menyesuaikan kemampuan, serta dukungan <strong>Chatbot AI Cerdas</strong>, Anda dapat belajar secara mandiri dan perlahan membangun pemahaman yang kuat mengenai algoritma numerik. Pendekatan ini memungkinkan Anda melihat bagaimana metode numerik digunakan dalam berbagai contoh nyata, terutama di bidang sains dan teknik, tanpa membuat proses belajarnya terasa berat.
+    </p>
   </header>
 
-  <footer>
-    <p>&copy; 2025 E-Learning Metode Numerik. Universitas Sebelas Maret.</p>
-  </footer>
+  <div class="home-container">
+    
+    <a href="pages/modul/pendahuluan.html" class="menu-card">
+      <div class="icon-wrapper"><i class="fas fa-book-open"></i></div>
+      <h3 class="menu-title">Mulai Belajar</h3>
+      <p class="menu-desc">Akses modul pembelajaran lengkap mulai dari materi dasar hingga lanjut.</p>
+    </a>
 
-  <script src="js/main.js"></script>
+    <a href="pages/profile.html" class="menu-card">
+      <div class="icon-wrapper"><i class="fas fa-info-circle"></i></div>
+      <h3 class="menu-title">Tentang MK</h3>
+      <p class="menu-desc">Informasi silabus, capaian pembelajaran, dan sistem penilaian mata kuliah.</p>
+    </a>
+
+    <a href="pages/chatbot.html" class="menu-card">
+      <div class="icon-wrapper"><i class="fas fa-robot"></i></div>
+      <h3 class="menu-title">Tanya AI</h3>
+      <p class="menu-desc">Kesulitan belajar? Tanyakan langsung pada asisten AI cerdas kami.</p>
+    </a>
+
+  </div>
+
 </body>
 </html>

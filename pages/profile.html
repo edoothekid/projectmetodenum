@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Mata Kuliah - Metode Numerik</title>
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    body { background-color: #f8fafc; }
+
+    /* --- HEADER BARU (GRADIENT) --- */
+    .profile-header {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+      margin-bottom: 40px;
+      border-radius: 0 0 40px 40px;
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.2);
+    }
+    .profile-header h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 800; }
+    .profile-header p { font-size: 1.1rem; opacity: 0.9; }
+
+    /* Container Utama */
+    .content-container {
+      max-width: 1000px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
+    }
+
+    /* --- CARD STYLE (KOTAK KONTEN) --- */
+    .content-section {
+      background: white;
+      padding: 35px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
+      border-top: 4px solid #3b82f6; /* Aksen Biru di atas */
+      transition: transform 0.3s;
+    }
+    .content-section:hover { transform: translateY(-5px); }
+
+    .section-title {
+      color: #1e40af; 
+      display: inline-block;
+      margin-bottom: 25px;
+      font-size: 1.6rem;
+      font-weight: 700;
+      border-bottom: 3px solid #f59e0b;
+      padding-bottom: 5px;
+    }
+
+    /* --- LIST CPMK --- */
+    .cpmk-list { list-style: none; }
+    .cpmk-list li {
+      margin-bottom: 15px;
+      padding-left: 35px;
+      position: relative;
+      text-align: justify;
+      line-height: 1.6;
+      padding-right: 10px;
+    }
+    .cpmk-list li::before {
+      content: '\f00c';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      color: #10b981; /* Centang Hijau */
+      position: absolute;
+      left: 0; top: 2px;
+      font-size: 1.1rem;
+    }
+
+    /* --- TABEL SILABUS & NILAI --- */
+    .syllabus-table {
+      width: 100%; border-collapse: separate; border-spacing: 0;
+      border-radius: 10px; overflow: hidden; border: 1px solid #e2e8f0;
+    }
+    .syllabus-table th { 
+      background-color: #eff6ff; /* Biru Muda banget */
+      color: #1e40af; 
+      padding: 15px; 
+      text-align: center; 
+      font-weight: 700; 
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .syllabus-table td { 
+      padding: 15px; 
+      border-top: 1px solid #e2e8f0; 
+      text-align: justify; 
+      color: #4b5563; 
+      vertical-align: top;
+    }
+    /* Kolom pertama (Minggu/Komponen) rata tengah & tebal */
+    .syllabus-table td:first-child { 
+      text-align: center; 
+      font-weight: 600; 
+      color: #1e40af; 
+    }
+
+    /* --- REFERENSI BUKU --- */
+    .book-ref {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 15px;
+      align-items: flex-start;
+      background-color: #f0f9ff;
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 5px solid #2563eb;
+    }
+    .book-icon { font-size: 2.5rem; color: #2563eb; margin-top: 5px; }
+    
+    .btn-download {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 20px;
+      background-color: #10b981;
+      color: white;
+      text-decoration: none;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn-download:hover { background-color: #059669; transform: scale(1.05); }
+
+    /* List Buku Tambahan */
+    .book-list {
+      list-style-type: none;
+      padding: 0;
+    }
+    .book-list li {
+      margin-bottom: 12px;
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.6;
+      color: #4b5563;
+    }
+    .book-list li::before {
+      content: '\2022'; /* Bullet point */
+      color: #2563eb;
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+    }
+
+    /* --- DOSEN CARD --- */
+    .lecturer-grid { display: flex; justify-content: center; margin-top: 10px; }
+    .lecturer-card {
+      background: #f8fafc; 
+      border: 1px solid #e2e8f0; 
+      border-radius: 16px;
+      padding: 30px; 
+      text-align: center; 
+      max-width: 320px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    .lecturer-img {
+      width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+      margin-bottom: 15px; border: 4px solid #3b82f6;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <h2 class="logo">Numerik<span>Lab</span></h2>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="profile.html" class="active">Profile MK</a></li>
+        <li><a href="modul/pendahuluan.html">Modul</a></li>
+        <li><a href="tugas.html">Tugas</a></li>
+        <li><a href="pengembang.html">Tim Pengembang</a></li>
+        <li><a href="chatbot.html" class="btn-chat-nav"><i class="fas fa-robot"></i> AI Asisten</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="profile-header">
+    <h1>Profile Mata Kuliah</h1>
+    <p>Kode MK: 02083143042 | 3 SKS | Semester 5</p>
+  </header>
+
+  <div class="content-container">
+
+    <section class="content-section">
+      <h3 class="section-title">Capaian Pembelajaran (CPMK)</h3>
+      <ul class="cpmk-list">
+        <li>Mahasiswa mampu memahami konsep eror dan menemukan solusi numerik dari permasalahan nonlinear.</li>
+        <li>Mahasiswa mampu melakukan interpolasi dari suatu kelompok data.</li>
+        <li>Mahasiswa mampu menemukan solusi numerik dari permasalahan integral (Aturan Trapesium & Simpson).</li>
+        <li>Mahasiswa mampu menemukan solusi numerik dari permasalahan diferensial (Metode Beda Maju, Mundur, Pusat).</li>
+        <li>Mampu menganalisis sensitivitas nilai fungsi terhadap eror/galat.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <h3 class="section-title">Silabus Perkuliahan</h3>
+      <div style="overflow-x: auto;">
+        <table class="syllabus-table">
+          <thead>
+            <tr>
+              <th width="10%">Minggu Ke-</th>
+              <th width="45%">Kemampuan Akhir</th>
+              <th width="45%">Materi Pokok</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1 - 3</td>
+              <td>Mahasiswa mampu memahami konsep eror dan menemukan solusi numerik dari permasalahan nonlinear</td>
+              <td>Konsep eror, Teori Metode Bagi Dua (Bisection), teori Metode Newton Raphson (Tangent), teori Metode Tali Busur (Secant)</td>
+            </tr>
+            <tr>
+              <td>4 - 6</td>
+              <td>Mahasiswa mampu melakukan interpolasi dari suatu kelompok data</td>
+              <td>Teori Interpolasi linear dan teori Interpolasi kuadratik</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>Mahasiswa mampu menemukan solusi numerik dari permasalahan nonlinear dan melakukan interpolasi dari suatu kelompok data yang lebih kompleks</td>
+              <td>Solusi numerik permasalahan nonlinear, interpolasi data</td>
+            </tr>
+            <tr>
+              <td>8 - 9</td>
+              <td>Mahasiswa mampu menemukan solusi numerik dari permasalahan integral</td>
+              <td>Teori aturan trapesium, teori aturan Simpson</td>
+            </tr>
+            <tr>
+              <td>10 - 13</td>
+              <td>Mahasiswa mampu menemukan solusi numerik dari permasalahan diferensial</td>
+              <td>Teori metode beda maju dua titik, teori metode beda mundur dua titik, teori metode beda pusat tiga titik, metode koefisien tak tentu</td>
+            </tr>
+            <tr>
+              <td>14 - 15</td>
+              <td>Mampu menganalisis sensitivitas nilai fungsi terhadap eror/galat : pengaruh eror/galat pada pendekatan nilai fungsi terhadap hasil akhir pendekatan solusi permasalahan dan mencari nilai optimal hasil akhir pendekatan solusi permasalahan berdasarkan hasil analisis sensitivitas</td>
+              <td>Analisis sensitivitas nilai fungsi terhadap eror/galat, nilai optimal hasil akhir pendekatan berdasarkan hasil analisis sensitivitas</td>
+            </tr>
+            <tr>
+              <td>16</td>
+              <td>Mahasiswa mampu menemukan solusi numerik dari permasalahan integral, diferensial, dan analisis sensitivitas nilai fungsi terhadap eror/galat yang lebih kompleks</td>
+              <td>Solusi numerik permasalahan integral, diferensial, dan analisis sensitivitas nilai fungsi terhadap eror/galat</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h3 class="section-title">Sistem Penilaian</h3>
+      <p style="margin-bottom: 15px; color: #555;">Berikut adalah bobot evaluasi untuk menentukan nilai akhir mahasiswa:</p>
+      
+      <div style="overflow-x: auto;">
+        <table class="syllabus-table">
+          <thead>
+            <tr>
+              <th style="text-align: center;">Komponen Penilaian</th>
+              <th style="width: 20%; text-align: center;">Bobot</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Aktivitas Partisipatif (Case Method)</td>
+              <td style="text-align: center;">20%</td>
+            </tr>
+            <tr>
+              <td>Hasil Proyek (Team Based Project)</td>
+              <td style="text-align: center;">40%</td>
+            </tr>
+            <tr>
+              <td>Tugas Harian</td>
+              <td style="text-align: center;">0%</td>
+            </tr>
+            <tr>
+              <td>Kuis (Quis)</td>
+              <td style="text-align: center;">0%</td>
+            </tr>
+            <tr>
+              <td>Ujian Tengah Semester (UTS)</td>
+              <td style="text-align: center;">20%</td>
+            </tr>
+            <tr>
+              <td>Ujian Akhir Semester (UAS)</td>
+              <td style="text-align: center;">20%</td>
+            </tr>
+            <tr style="background-color: #eff6ff; font-weight: bold; border-top: 2px solid #2563eb;">
+              <td>Total</td>
+              <td style="text-align: center;">100%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h3 class="section-title">Referensi Buku</h3>
+      
+      <div class="book-ref">
+        <i class="fas fa-book book-icon"></i>
+        <div>
+          <strong style="font-size: 1.1rem; color: #1f2937;">Faires, J.D., & Burden, R.L. (2002)</strong><br>
+          <em style="color: #4b5563;">Numerical Methods</em> (3rd Edition).<br>
+          <p style="font-size: 0.95rem; margin-top: 8px; color: #6b7280;">Buku referensi utama untuk algoritma dan analisis numerik.</p>
+          <a href="https://uodiyala.edu.iq/uploads/PDF%20ELIBRARY%20UODIYALA/collect%20EL3/Numerical_Methods__Faires&Burden.pdf" target="_blank" class="btn-download">
+            <i class="fas fa-file-pdf"></i> Baca / Unduh PDF
+          </a>
+        </div>
+      </div>
+
+      <div style="margin-top: 30px;">
+        <h4 style="color: #1e40af; margin-bottom: 15px;">Referensi Pendukung:</h4>
+        <ul class="book-list">
+          <li>Atkinson, K, <em>Elementary Numerical Analysis</em>, John Wiley & Sons, 1994</li>
+          <li>Burden, R. L., Douglas, J. F., Reynolds, A. C., <em>Numerical Analysis</em>, Second ed., Prindle, Weber & Schmidt, 1981</li>
+          <li>Buchanan, J. L. dan Turner, P. R., <em>Numerical Method & Analysis</em>, McGraw Hill Inc., 1992</li>
+          <li>Mathew, <em>Numerical Methods</em>, Prantice Hall, 1999</li>
+          <li>Wahyudin, <em>Metode Analisis Numerik</em>, Tarsito, 1987</li>
+          <li>Susila, I Nyoman, <em>Dasar-dasar Metode Numerik</em>, Direktorat Jenderal Pendidikan Tinggi, 1994</li>
+          <li>Epperson, J., <em>Introduction to Numerical Methods and Analysis</em>, John Wiley & Sons, 2002</li>
+          <li>Rajaraman, V., <em>Computer Oriented Numerical Methods</em>, Prentice Hall of India, 1981</li>
+          <li>Chapra, S dan Canale, R, <em>Metode Numerik Jilid I (Terjemahan)</em>, Erlangga, 1991</li>
+        </ul>
+      </div>
+
+    </section>
+
+    <section class="content-section">
+      <h3 class="section-title">Dosen Pengampu</h3>
+      <div class="lecturer-grid">
+        <div class="lecturer-card">
+          <img src="../images/pak-rubono.jpg" alt="Dr. Rubono Setiawan" class="lecturer-img">
+          <div style="font-weight: bold; font-size: 1.1rem; color: #1f2937;">Dr. Rubono Setiawan S.Si., M.Sc.</div>
+          <div style="color: #6b7280; margin-top: 5px;">NIP 198509252010121005</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2025 E-Learning Metode Numerik. Universitas Sebelas Maret.</p>
+  </footer>
+
+</body>
+</html>

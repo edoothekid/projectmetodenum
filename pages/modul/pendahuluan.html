@@ -9,118 +9,125 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
   <style>
-    /* Styling Khusus Halaman Modul */
-    .module-header {
-      background-color: #f0f9ff;
-      padding: 60px 20px;
+    body { background-color: #f8fafc; }
+
+    /* --- HEADER (GRADIENT HIJAU) --- */
+    .modul-header {
+      background: linear-gradient(135deg, #059669, #10b981); /* Hijau Segar */
+      color: white;
+      padding: 80px 20px;
       text-align: center;
-      border-bottom: 1px solid #e0f2fe;
+      margin-bottom: 40px;
+      border-radius: 0 0 40px 40px;
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
     }
-    
-    .module-header h1 {
-      color: #1e40af;
-      margin-bottom: 15px;
-      font-size: 2.5rem;
-      font-weight: 800;
-    }
-
-    .module-intro {
-      max-width: 800px;
-      margin: 0 auto;
-      color: #4b5563;
-      font-size: 1.1rem;
-      line-height: 1.6;
+    .modul-header h1 { 
+      font-size: 2.8rem; 
+      font-weight: 800; 
+      margin-bottom: 0; 
+      text-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Tambah Bayangan Teks */
     }
 
-    .module-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 40px;
-      max-width: 1280px;
-      margin: 0 auto 60px auto;
+    /* --- CONTAINER UTAMA --- */
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto 60px;
       padding: 0 20px;
     }
 
+    /* --- BAGIAN 1: INTRO (ARTIKEL) --- */
+    .intro-card {
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); /* Bayangan lebih halus */
+      margin-bottom: 50px;
+      line-height: 1.8;
+      color: #374151;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      border-top: 5px solid #059669; /* Garis Atas Hijau */
+    }
+    .intro-card h2 { 
+      color: #059669; font-size: 1.8rem; margin-top: 0; margin-bottom: 15px; 
+      border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; 
+    }
+    .intro-card p { margin-bottom: 20px; text-align: justify; }
+
+    /* --- BAGIAN 2: GRID MODUL (LIBRARY) --- */
+    .library-title {
+      text-align: center; margin-bottom: 30px;
+    }
+    .library-title h2 { font-size: 2rem; color: #1f2937; font-weight: 800; margin-bottom: 10px; }
+    .library-title p { color: #6b7280; font-size: 1.1rem; }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      justify-content: center;
+    }
+
+    /* CARD MODUL STYLE (DIPERBARUI) */
     .module-card {
       background: white;
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      /* Bayangan dipertegas agar mirip halaman lain */
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05); 
       transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
       border: 1px solid #f3f4f6;
+      /* Tambahan Border Top Warna Hijau agar seragam */
+      border-top: 5px solid #059669; 
     }
 
     .module-card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 20px 30px -5px rgba(0, 0, 0, 0.15); /* Bayangan hover lebih kuat */
     }
 
     .card-image-wrapper {
       width: 100%;
-      height: 200px;
+      height: 180px;
       overflow: hidden;
       position: relative;
       background-color: #e5e7eb;
     }
 
     .card-image-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      width: 100%; height: 100%; object-fit: cover;
       transition: transform 0.5s ease;
     }
-
-    .module-card:hover .card-image-wrapper img {
-      transform: scale(1.05);
-    }
+    .module-card:hover .card-image-wrapper img { transform: scale(1.05); }
 
     .card-content {
       padding: 25px;
       flex-grow: 1; 
-      display: flex;
-      flex-direction: column;
+      display: flex; flex-direction: column;
     }
 
     .card-number {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #f59e0b;
-      font-weight: 700;
-      margin-bottom: 8px;
+      font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
+      color: #f59e0b; font-weight: 700; margin-bottom: 8px;
     }
 
     .card-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #1f2937;
-      margin-bottom: 12px;
-      line-height: 1.3;
+      font-size: 1.3rem; font-weight: 700; color: #1f2937; margin-bottom: 10px; line-height: 1.3;
     }
 
     .card-desc {
-      color: #6b7280;
-      font-size: 0.95rem;
-      margin-bottom: 25px;
-      line-height: 1.6;
-      flex-grow: 1;
+      color: #6b7280; font-size: 0.95rem; margin-bottom: 20px; line-height: 1.6; flex-grow: 1;
     }
 
     .btn-download-modul {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      width: 100%;
-      text-align: center;
+      display: inline-flex; justify-content: center; align-items: center; gap: 8px;
+      width: 100%; text-align: center;
       background: linear-gradient(to right, #f59e0b, #d97706);
-      color: white;
-      padding: 12px;
-      border-radius: 8px;
-      font-weight: 600;
-      text-decoration: none;
+      color: white; padding: 10px; border-radius: 8px;
+      font-weight: 600; text-decoration: none; font-size: 0.95rem;
       transition: all 0.3s ease;
       box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.3);
     }
@@ -130,6 +137,16 @@
       box-shadow: 0 6px 8px -1px rgba(245, 158, 11, 0.5);
       transform: translateY(-1px);
     }
+
+    /* Navigasi Bawah Intro */
+    .intro-nav {
+      display: flex; justify-content: space-between; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb;
+    }
+    .btn-intro {
+      text-decoration: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; transition: 0.3s; font-size: 0.9rem;
+      background-color: #f3f4f6; color: #4b5563;
+    }
+    .btn-intro:hover { background-color: #059669; color: white; }
   </style>
 </head>
 
@@ -140,7 +157,7 @@
       <h2 class="logo">Numerik<span>Lab</span></h2>
       <ul class="nav-links">
         <li><a href="../../index.html">Home</a></li>
-        <li><a href="../profil.html">Profile MK</a></li>
+        <li><a href="../profile.html">Profile MK</a></li>
         <li><a href="pendahuluan.html" class="active">Modul</a></li>
         <li><a href="../tugas.html">Tugas</a></li>
         <li><a href="../pengembang.html">Tim Pengembang</a></li>
@@ -149,99 +166,117 @@
     </div>
   </nav>
 
-  <header class="module-header">
-    <h1>Perpustakaan Modul</h1>
-    <p class="module-intro">
-        Akses materi pembelajaran lengkap mulai dari Konsep Galat & Deret Taylor, Akar Persamaan Non-Linear hingga Masalah Nilai Awal (PDB).
-    </p>
-
-    <p class="module-intro"></p>
-        Klik tombol di bawah untuk membaca materi.
-    </p>
+  <header class="modul-header">
+    <h1>Modul Pembelajaran</h1>
   </header>
 
-  <div class="module-grid">
+  <div class="main-container">
 
-    <div class="module-card">
-      <div class="card-image-wrapper">
-        <img src="../../images/cover1.jpg" alt="Cover Modul 1" onerror="this.src='https://via.placeholder.com/400x200?text=Cover+Modul+1'">
+    <article class="intro-card">
+      <h2>1. Apa itu Metode Numerik?</h2>
+      <p>
+        Metode numerik adalah teknik yang digunakan untuk memformulasikan masalah matematis agar dapat diselesaikan dengan operasi aritmatika dan logika biasa. Metode ini sangat penting ketika solusi analitik sulit atau bahkan tidak mungkin ditemukan.
+      </p>
+      
+      <h2>2. Mengapa Mempelajarinya?</h2>
+      <p>
+        Dalam dunia sains dan teknik, banyak model matematika yang kompleks. Dengan metode numerik, kita dapat menemukan solusi pendekatan (aproksimasi) yang cukup akurat untuk kebutuhan praktis, dibantu oleh komputer.
+      </p>
+
+      <div class="intro-nav">
+        <a href="#" class="btn-intro" style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-arrow-left"></i> Sebelumnya</a>
+        <a href="#library-section" class="btn-intro">Lihat Modul <i class="fas fa-arrow-down"></i></a>
       </div>
-      <div class="card-content">
-        <span class="card-number">Modul 01</span>
-        <h3 class="card-title">Konsep Galat & Deret Taylor</h3>
-        <p class="card-desc">
-          Mempelajari definisi error, sumber kesalahan numerik, error pemotongan (truncation), serta penggunaan Polinomial Taylor.
-        </p>
-        <a href="https://drive.google.com/file/d/1wLHOGmsCd-80zW8lhXKysW_Xl39F5iCg/view?usp=sharing" class="btn-download-modul" target="_blank">
-          <i class="fas fa-file-pdf"></i> Baca / Unduh PDF
-        </a>
-      </div>
+    </article>
+
+    <div id="library-section" class="library-title">
+      <h2>Perpustakaan Modul</h2>
+      <p>Akses materi lengkap mulai dari Konsep Dasar hingga Masalah Nilai Awal.</p>
     </div>
 
-    <div class="module-card">
-      <div class="card-image-wrapper">
-        <img src="../../images/cover2.jpg" alt="Cover Modul 2" onerror="this.src='https://via.placeholder.com/400x200?text=Cover+Modul+2'">
-      </div>
-      <div class="card-content">
-        <span class="card-number">Modul 02</span>
-        <h3 class="card-title">Akar Persamaan Non-Linear</h3>
-        <p class="card-desc">
-          Teknik mencari akar persamaan f(x)=0 menggunakan Metode Tertutup (Bisection) dan Metode Terbuka (Iterasi Titik Tetap).
-        </p>
-        <a href="https://drive.google.com/file/d/1uJOttUTyK80eHflPoN5RAu3u51p_kkhD/view?usp=sharing" class="btn-download-modul" target="_blank">
-          <i class="fas fa-file-pdf"></i> Baca / Unduh PDF
-        </a>
-      </div>
-    </div>
+    <div class="module-grid">
 
-    <div class="module-card">
-      <div class="card-image-wrapper">
-        <img src="../../images/cover3.jpg" alt="Cover Modul 3" onerror="this.src='https://via.placeholder.com/400x200?text=Cover+Modul+3'">
+      <div class="module-card">
+        <div class="card-image-wrapper">
+          <img src="../../images/cover1.jpg" alt="Cover Modul 1" onerror="this.src='https://placehold.co/400x200?text=Modul+01'">
+        </div>
+        <div class="card-content">
+          <span class="card-number">Modul 01</span>
+          <h3 class="card-title">Konsep Galat & Deret Taylor</h3>
+          <p class="card-desc">
+            Mempelajari definisi error, sumber kesalahan numerik, error pemotongan (truncation), serta penggunaan Polinomial Taylor.
+          </p>
+          <a href="https://drive.google.com/file/d/1wLHOGmsCd-80zW8lhXKysW_Xl39F5iCg/view?usp=sharing" class="btn-download-modul" target="_blank">
+            <i class="fas fa-file-pdf"></i> Baca / Unduh PDF
+          </a>
+        </div>
       </div>
-      <div class="card-content">
-        <span class="card-number">Modul 03</span>
-        <h3 class="card-title">Interpolasi Polinomial</h3>
-        <p class="card-desc">
-          Menentukan fungsi pendekatan berdasarkan titik data. Mencakup Interpolasi Linear, Kuadratik, dan Beda Bagi Newton.
-        </p>
-        <a href="https://drive.google.com/file/d/11uvZ-RD5JD57nTxzQ374tvqOF62r42au/view?usp=sharing" class="btn-download-modul" target="_blank">
-          <i class="fas fa-file-pdf"></i> Baca / Unduh PDF
-        </a>
-      </div>
-    </div>
 
-    <div class="module-card">
-      <div class="card-image-wrapper">
-        <img src="../../images/cover4.jpg" alt="Cover Modul 4" onerror="this.src='https://via.placeholder.com/400x200?text=Cover+Modul+4'">
+      <div class="module-card">
+        <div class="card-image-wrapper">
+          <img src="../../images/cover2.jpg" alt="Cover Modul 2" onerror="this.src='https://placehold.co/400x200?text=Modul+02'">
+        </div>
+        <div class="card-content">
+          <span class="card-number">Modul 02</span>
+          <h3 class="card-title">Akar Persamaan Non-Linear</h3>
+          <p class="card-desc">
+            Teknik mencari akar persamaan f(x)=0 menggunakan Metode Tertutup (Bisection) dan Metode Terbuka (Iterasi Titik Tetap).
+          </p>
+          <a href="https://drive.google.com/file/d/1uJOttUTyK80eHflPoN5RAu3u51p_kkhD/view?usp=sharing" class="btn-download-modul" target="_blank">
+            <i class="fas fa-file-pdf"></i> Baca / Unduh PDF
+          </a>
+        </div>
       </div>
-      <div class="card-content">
-        <span class="card-number">Modul 04</span>
-        <h3 class="card-title">Integrasi Numerik</h3>
-        <p class="card-desc">
-          Menghitung luas daerah di bawah kurva secara numerik menggunakan Metode Pias, Aturan Trapesium, dan Simpson.
-        </p>
-        <a href="https://drive.google.com/file/d/1IBaGJi_bnkJOEBQ6CYvsYdUy1nTHXe1M/view?usp=sharing" class="btn-download-modul" target="_blank">
-          <i class="fas fa-file-pdf"></i> Baca / Unduh PDF
-        </a>
-      </div>
-    </div>
 
-    <div class="module-card">
-      <div class="card-image-wrapper">
-        <img src="../../images/cover5.jpg" alt="Cover Modul 5" onerror="this.src='https://via.placeholder.com/400x200?text=Cover+Modul+5'">
+      <div class="module-card">
+        <div class="card-image-wrapper">
+          <img src="../../images/cover3.jpg" alt="Cover Modul 3" onerror="this.src='https://placehold.co/400x200?text=Modul+03'">
+        </div>
+        <div class="card-content">
+          <span class="card-number">Modul 03</span>
+          <h3 class="card-title">Interpolasi Polinomial</h3>
+          <p class="card-desc">
+            Menentukan fungsi pendekatan berdasarkan titik data. Mencakup Interpolasi Linear, Kuadratik, dan Beda Bagi Newton.
+          </p>
+          <a href="https://drive.google.com/file/d/11uvZ-RD5JD57nTxzQ374tvqOF62r42au/view?usp=sharing" class="btn-download-modul" target="_blank">
+            <i class="fas fa-file-pdf"></i> Baca / Unduh PDF
+          </a>
+        </div>
       </div>
-      <div class="card-content">
-        <span class="card-number">Modul 05</span>
-        <h3 class="card-title">Masalah Nilai Awal (PDB)</h3>
-        <p class="card-desc">
-          Solusi numerik PDB orde satu menggunakan Metode Euler, Metode Heun, dan Metode Runge-Kutta.
-        </p>
-        <a href="https://drive.google.com/file/d/1qgo8uK_D7Yn-O2X-bBuNj5M9ceuidRsE/view?usp=drive_link" class="btn-download-modul" target="_blank">
-          <i class="fas fa-file-pdf"></i> Baca / Unduh PDF
-        </a>
-      </div>
-    </div>
 
+      <div class="module-card">
+        <div class="card-image-wrapper">
+          <img src="../../images/cover4.jpg" alt="Cover Modul 4" onerror="this.src='https://placehold.co/400x200?text=Modul+04'">
+        </div>
+        <div class="card-content">
+          <span class="card-number">Modul 04</span>
+          <h3 class="card-title">Integrasi Numerik</h3>
+          <p class="card-desc">
+            Menghitung luas daerah di bawah kurva secara numerik menggunakan Metode Pias, Aturan Trapesium, dan Simpson.
+          </p>
+          <a href="https://drive.google.com/file/d/1IBaGJi_bnkJOEBQ6CYvsYdUy1nTHXe1M/view?usp=sharing" class="btn-download-modul" target="_blank">
+            <i class="fas fa-file-pdf"></i> Baca / Unduh PDF
+          </a>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="card-image-wrapper">
+          <img src="../../images/cover5.jpg" alt="Cover Modul 5" onerror="this.src='https://placehold.co/400x200?text=Modul+05'">
+        </div>
+        <div class="card-content">
+          <span class="card-number">Modul 05</span>
+          <h3 class="card-title">Masalah Nilai Awal (PDB)</h3>
+          <p class="card-desc">
+            Solusi numerik PDB orde satu menggunakan Metode Euler, Metode Heun, dan Metode Runge-Kutta.
+          </p>
+          <a href="https://drive.google.com/file/d/1qgo8uK_D7Yn-O2X-bBuNj5M9ceuidRsE/view?usp=drive_link" class="btn-download-modul" target="_blank">
+            <i class="fas fa-file-pdf"></i> Baca / Unduh PDF
+          </a>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <footer>

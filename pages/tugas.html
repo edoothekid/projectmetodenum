@@ -11,57 +11,80 @@
   <style>
     body { background-color: #f8fafc; }
 
+    /* Header Gradient Ungu/Indigo */
     .task-header {
       background: linear-gradient(135deg, #4f46e5, #4338ca);
       color: white;
       padding: 80px 20px;
       text-align: center;
       margin-bottom: 50px;
+      border-radius: 0 0 40px 40px;
+      box-shadow: 0 4px 20px rgba(79, 70, 229, 0.2);
     }
     
-    .task-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+    .task-header h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 800; }
     .task-header p { font-size: 1.1rem; opacity: 0.9; max-width: 700px; margin: 0 auto; }
 
     .container-custom {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto 80px auto;
       padding: 0 20px;
     }
 
     .task-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(3, 1fr); /* 3 Kolom */
       gap: 30px;
     }
 
+    /* Responsif */
+    @media (max-width: 992px) {
+      .task-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .task-grid { grid-template-columns: 1fr; }
+    }
+
+    /* CARD STYLE */
     .task-card {
       background: white;
-      border-radius: 12px;
+      border-radius: 16px;
       padding: 30px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
       border-top: 5px solid #4f46e5;
       transition: transform 0.3s;
       display: flex;
       flex-direction: column;
+      text-align: center; /* UPDATE: Membuat semua teks di dalam kartu rata tengah */
     }
 
     .task-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
     }
 
-    .task-icon { font-size: 2.5rem; color: #4f46e5; margin-bottom: 20px; }
+    .task-icon { 
+      font-size: 2.5rem; 
+      color: #4f46e5; 
+      margin-bottom: 20px; 
+      /* text-align: center; <- Tidak perlu lagi karena parent sudah center */
+    }
+
     .task-title { font-size: 1.3rem; font-weight: bold; color: #1f2937; margin-bottom: 10px; }
     .task-desc { color: #6b7280; font-size: 0.95rem; margin-bottom: 25px; flex-grow: 1; line-height: 1.6; }
     
     .task-meta {
       font-size: 0.9rem;
-      color: #ef4444;
+      color: #64748b;
       font-weight: 600;
-      margin-bottom: 20px;
+      margin: 0 auto 20px auto; /* Margin auto menjaga box ini tetap di tengah */
       display: flex;
       align-items: center;
       gap: 8px;
+      background-color: #f1f5f9;
+      padding: 8px 12px;
+      border-radius: 8px;
+      width: fit-content;
     }
 
     .btn-task {
@@ -74,9 +97,70 @@
       text-decoration: none;
       font-weight: 600;
       transition: 0.3s;
+      cursor: pointer;
+      border: none;
+      width: 100%;
     }
 
     .btn-task:hover { background-color: #4f46e5; color: white; }
+
+    /* --- STYLE MODAL (POP-UP) --- */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-box {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+      transform: translateY(20px);
+      transition: transform 0.3s;
+      position: relative;
+      text-align: left; /* Kembalikan teks modal jadi rata kiri agar enak dibaca */
+    }
+
+    .modal-overlay.active .modal-box {
+      transform: translateY(0);
+    }
+
+    .modal-header-popup {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; border-bottom: 1px solid #e5e7eb; padding-bottom: 15px;
+    }
+
+    .modal-title { font-size: 1.5rem; font-weight: bold; color: #1f2937; }
+    .close-modal { background: none; border: none; font-size: 2rem; line-height: 1; cursor: pointer; color: #6b7280; }
+    .close-modal:hover { color: #ef4444; }
+
+    .modal-body { color: #4b5563; line-height: 1.7; font-size: 1rem; }
+    
+    .modal-list li { margin-bottom: 10px; margin-left: 20px; }
+    
+    .modal-btn-action {
+      display: inline-block; background: #4f46e5; color: white; 
+      padding: 10px 20px; border-radius: 8px; text-decoration: none; margin-top: 15px;
+    }
+    .modal-btn-action:hover { background: #4338ca; }
+
   </style>
 </head>
 
@@ -87,60 +171,302 @@
       <h2 class="logo">Numerik<span>Lab</span></h2>
       <ul class="nav-links">
         <li><a href="../index.html">Home</a></li>
-        <li><a href="profil.html">Profile MK</a></li>
+        <li><a href="profile.html">Profile MK</a></li>
         <li><a href="modul/pendahuluan.html">Modul</a></li>
         <li><a href="tugas.html" class="active">Tugas</a></li>
-        <li><a href="pengembang.html">Tim Pengembang</a></li> <li><a href="chatbot.html" class="btn-chat-nav"><i class="fas fa-robot"></i> AI Asisten</a></li>
+        <li><a href="pengembang.html">Tim Pengembang</a></li> 
+        <li><a href="chatbot.html" class="btn-chat-nav"><i class="fas fa-robot"></i> AI Asisten</a></li>
       </ul>
     </div>
   </nav>
 
   <header class="task-header">
     <h1>Tugas & Evaluasi</h1>
-    <p>Kumpulan tugas terstruktur, studi kasus, dan proyek akhir untuk mengukur capaian pembelajaran.</p>
+    <p>Jadwal lengkap penugasan, proyek media pembelajaran, serta evaluasi tengah dan akhir semester.</p>
   </header>
 
   <div class="container-custom">
     <div class="task-grid">
       
       <div class="task-card">
-        <div class="task-icon"><i class="fas fa-microscope"></i></div>
-        <h3 class="task-title">Case Method: Analisis Galat</h3>
-        <p class="task-desc">Analisis sensitivitas galat pada perhitungan numerik sederhana menggunakan deret Taylor. Studi kasus pada data riil.</p>
-        <div class="task-meta"><i class="far fa-clock"></i> Deadline: Pertemuan 3</div>
-        <a href="#" class="btn-task">Lihat Detail</a>
+        <div class="task-icon"><i class="fas fa-calculator"></i></div>
+        <h3 class="task-title">Tugas 1: Analisis Galat</h3>
+        <p class="task-desc">Latihan soal mengenai konsep eror, angka signifikan, dan metode pencarian akar (Bisection & Newton-Raphson).</p>
+        <div class="task-meta"><i class="far fa-clock"></i> Pertemuan 1 - 3</div>
+        <button class="btn-task" onclick="showModal('soal1')">Lihat Soal</button>
+      </div>
+
+      <div class="task-card">
+        <div class="task-icon"><i class="fas fa-chart-line"></i></div>
+        <h3 class="task-title">Tugas 2: Interpolasi</h3>
+        <p class="task-desc">Studi kasus penerapan Interpolasi Linear dan Kuadratik pada data eksperimen sederhana.</p>
+        <div class="task-meta"><i class="far fa-clock"></i> Pertemuan 4 - 6</div>
+        <button class="btn-task" onclick="showModal('soal2')">Lihat Soal</button>
+      </div>
+
+      <div class="task-card" style="border-top-color: #0d9488;">
+        <div class="task-icon" style="color: #0d9488;"><i class="fas fa-tasks"></i></div>
+        <h3 class="task-title">Progress Media Pembelajaran</h3>
+        <p class="task-desc">Monitoring perkembangan pembuatan media pembelajaran metode numerik. Wajib membawa draft awal.</p>
+        <div class="task-meta" style="color: #0d9488; background: #ccfbf1;"><i class="far fa-calendar-check"></i> Pertemuan 7</div>
+        <a href="https://uns.id/ProgresMetnumProjek" target="_blank" class="btn-task" style="background: #f0fdfa; color: #0f766e;">
+          <i class="fas fa-upload"></i> Upload Progress
+        </a>
       </div>
 
       <div class="task-card" style="border-top-color: #f59e0b;">
         <div class="task-icon" style="color: #f59e0b;"><i class="fas fa-file-signature"></i></div>
-        <h3 class="task-title">Ujian Tengah Semester</h3>
-        <p class="task-desc">Evaluasi tertulis mencakup materi Akar Persamaan Non-Linear, Bisection, Newton-Raphson, dan SPL.</p>
-        <div class="task-meta"><i class="far fa-calendar-alt"></i> Jadwal: Pertemuan 8</div>
-        <a href="#" class="btn-task">Kisi-kisi Soal</a>
+        <h3 class="task-title">Ujian Tengah Semester (UTS)</h3>
+        <p class="task-desc">Evaluasi tertulis materi Analisis Galat, Akar Persamaan, dan Interpolasi.</p>
+        <div class="task-meta" style="color: #b45309; background: #fffbeb;"><i class="far fa-calendar-alt"></i> Pertemuan 8</div>
+        <button class="btn-task" style="background: #fff7ed; color: #9a3412;" onclick="showModal('kisi-uts')">Kisi-kisi Soal</button>
       </div>
 
-      <div class="task-card" style="border-top-color: #10b981;">
-        <div class="task-icon" style="color: #10b981;"><i class="fas fa-users-cog"></i></div>
-        <h3 class="task-title">Team Based Project</h3>
-        <p class="task-desc">Proyek kelompok membuat media pembelajaran inovatif atau penyelesaian masalah sains menggunakan metode numerik.</p>
-        <div class="task-meta"><i class="far fa-clock"></i> Deadline: Pertemuan 15</div>
-        <a href="#" class="btn-task">Unduh Panduan</a>
+      <div class="task-card">
+        <div class="task-icon"><i class="fas fa-draw-polygon"></i></div>
+        <h3 class="task-title">Tugas 3: Integrasi Numerik</h3>
+        <p class="task-desc">Menyelesaikan masalah luas daerah menggunakan Aturan Trapesium dan Simpson.</p>
+        <div class="task-meta"><i class="far fa-clock"></i> Pertemuan 9</div>
+        <button class="btn-task" onclick="showModal('soal3')">Lihat Soal</button>
+      </div>
+
+      <div class="task-card">
+        <div class="task-icon"><i class="fas fa-wave-square"></i></div>
+        <h3 class="task-title">Tugas 4: Diferensial</h3>
+        <p class="task-desc">Latihan metode Beda Maju, Mundur, dan Pusat untuk penyelesaian persamaan diferensial.</p>
+        <div class="task-meta"><i class="far fa-clock"></i> Pertemuan 10 - 13</div>
+        <button class="btn-task" onclick="showModal('soal4')">Lihat Soal</button>
+      </div>
+
+      <div class="task-card">
+        <div class="task-icon"><i class="fas fa-search-dollar"></i></div>
+        <h3 class="task-title">Tugas 5: Sensitivitas</h3>
+        <p class="task-desc">Analisis sensitivitas nilai fungsi terhadap eror dan penentuan nilai optimal.</p>
+        <div class="task-meta"><i class="far fa-clock"></i> Pertemuan 14</div>
+        <button class="btn-task" onclick="showModal('soal5')">Lihat Soal</button>
+      </div>
+
+      <div class="task-card" style="border-top-color: #7c3aed;">
+        <div class="task-icon" style="color: #7c3aed;"><i class="fas fa-chalkboard-teacher"></i></div>
+        <h3 class="task-title">Presentasi Media</h3>
+        <p class="task-desc">Presentasi hasil akhir Team Based Project (Media Pembelajaran Metode Numerik).</p>
+        <div class="task-meta" style="color: #5b21b6; background: #ede9fe;"><i class="fas fa-bullhorn"></i> Pertemuan 15</div>
+        <button class="btn-task" style="background: #f5f3ff; color: #4c1d95;" onclick="showModal('jadwal-presentasi')">Jadwal Presentasi</button>
       </div>
 
       <div class="task-card" style="border-top-color: #ef4444;">
         <div class="task-icon" style="color: #ef4444;"><i class="fas fa-graduation-cap"></i></div>
-        <h3 class="task-title">Ujian Akhir Semester</h3>
-        <p class="task-desc">Evaluasi akhir semester mencakup materi Interpolasi, Integrasi Numerik, dan Persamaan Diferensial Biasa.</p>
-        <div class="task-meta"><i class="far fa-calendar-alt"></i> Jadwal: Pertemuan 16</div>
-        <a href="#" class="btn-task">Jadwal Ujian</a>
+        <h3 class="task-title">Ujian Akhir Semester (UAS)</h3>
+        <p class="task-desc">Evaluasi komprehensif mencakup Integrasi, Diferensial, dan Analisis Sensitivitas.</p>
+        <div class="task-meta" style="color: #991b1b; background: #fef2f2;"><i class="far fa-calendar-check"></i> Pertemuan 16</div>
+        <button class="btn-task" style="background: #fff1f2; color: #be123c;" onclick="showModal('ketentuan-uas')">Ketentuan Ujian</button>
       </div>
 
+    </div>
+  </div>
+
+  <div id="infoModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header-popup">
+        <h3 class="modal-title" id="modalTitle">Judul Info</h3>
+        <button class="close-modal" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="modalContent">
+        </div>
     </div>
   </div>
 
   <footer>
     <p>&copy; 2025 E-Learning Metode Numerik. Universitas Sebelas Maret.</p>
   </footer>
+
+  <script>
+    const contentData = {
+      'soal1': {
+        title: "Tugas 1: Analisis Galat",
+        html: `
+          <p><strong>Instruksi:</strong> Kerjakan soal berikut pada kertas folio bergaris, scan dalam format PDF, dan kumpulkan melalui link yang tersedia.</p>
+          <hr style="margin: 10px 0; border: 0; border-top: 1px solid #eee;">
+          <ol class="modal-list" style="padding-left: 20px;">
+            <li><strong>Konsep Galat:</strong> Jelaskan perbedaan mendasar antara <em>galat pemotongan (truncation error)</em> dan <em>galat pembulatan (round-off error)</em>. Berikan contoh kasus di mana masing-masing galat terjadi secara signifikan.</li>
+            <li><strong>Deret Taylor:</strong> Hampiri fungsi f(x) = e^(-x) di x(i+1) = 1 dengan titik dasar x(i) = 0.5 menggunakan Deret Taylor orde ke-3. Hitunglah:
+                <ul style="margin-top:5px;">
+                    <li>Galat pemotongan (Rn).</li>
+                    <li>Galat relatif sebenarnya.</li>
+                </ul>
+            </li>
+            <li><strong>Akar Persamaan:</strong> Tentukan akar persamaan f(x) = x^3 - 2x - 5 dalam selang [2, 3] menggunakan <strong>Metode Bisection</strong>. Lakukan perhitungan manual sebanyak 3 iterasi dan buat tabel galatnya.</li>
+          </ol>
+          <div style="margin-top: 20px; text-align: center;">
+            <a href="#" class="modal-btn-action"><i class="fas fa-file-pdf"></i> Unduh Naskah Soal Lengkap</a>
+          </div>`
+      },
+      'soal2': {
+        title: "Tugas 2: Interpolasi",
+        html: `
+          <p><strong>Studi Kasus:</strong> Berikut adalah data hasil eksperimen pengukuran kecepatan (v) benda terhadap waktu (t).</p>
+          <table style="width:100%; border-collapse:collapse; margin:10px 0; text-align:center;">
+            <tr style="background:#f9fafb;">
+                <th style="border:1px solid #ddd; padding:5px;">t (detik)</th>
+                <td>1.0</td><td>2.0</td><td>3.0</td><td>4.0</td>
+            </tr>
+            <tr>
+                <th style="border:1px solid #ddd; padding:5px;">v (m/s)</th>
+                <td>10.5</td><td>18.2</td><td>25.4</td><td>31.8</td>
+            </tr>
+          </table>
+          <p><strong>Pertanyaan:</strong></p>
+          <ol class="modal-list" style="padding-left: 20px;">
+            <li>Lakukan estimasi kecepatan benda pada saat t = 2.5 detik menggunakan <strong>Interpolasi Polinomial Lagrange Orde 2</strong>.</li>
+            <li>Gunakan <strong>Interpolasi Newton Beda Terbagi</strong> untuk menaksir nilai kecepatan pada t = 3.5 detik.</li>
+            <li>Analisis metode mana yang memberikan hasil lebih presisi berdasarkan data tersebut.</li>
+          </ol>`
+      },
+      'soal3': {
+        title: "Tugas 3: Integrasi Numerik",
+        html: `
+          <p>Hitunglah luas daerah di bawah kurva fungsi berikut:</p>
+          <p style="text-align:center; font-weight:bold; background:#f3f4f6; padding:10px; border-radius:5px;">
+            f(x) = x * e^(2x) pada interval [0, 3]
+          </p>
+          <p><strong>Metode Pengerjaan:</strong></p>
+          <ul class="modal-list">
+            <li>Gunakan <strong>Aturan Trapesium Multi-pias</strong> dengan jumlah segmen n = 6.</li>
+            <li>Gunakan <strong>Aturan Simpson 1/3</strong> dengan jumlah segmen n = 6.</li>
+            <li>Hitung nilai integral secara analitik (kalkulus), kemudian tentukan galat relatif (%) dari kedua metode numerik di atas.</li>
+          </ul>`
+      },
+      'soal4': {
+        title: "Tugas 4: Persamaan Diferensial",
+        html: `
+          <p>Selesaikan Masalah Nilai Awal (Initial Value Problem) berikut:</p>
+          <p style="text-align:center; font-weight:bold;">
+            dy/dx = y * sin(x) + x, dengan y(0) = 1
+          </p>
+          <p><strong>Instruksi:</strong></p>
+          <ol class="modal-list" style="padding-left: 20px;">
+            <li>Tentukan nilai y(0.5) menggunakan <strong>Metode Euler</strong> dengan ukuran langkah h = 0.1.</li>
+            <li>Tentukan nilai y(0.5) menggunakan <strong>Metode Heun</strong> dengan ukuran langkah h = 0.1.</li>
+            <li>Sajikan hasil perhitungan setiap langkah (x=0.1, 0.2, ..., 0.5) dalam bentuk tabel perbandingan.</li>
+          </ol>`
+      },
+      'soal5': {
+        title: "Tugas 5: Analisis Sensitivitas",
+        html: `
+          <p><strong>Kasus:</strong> Diberikan model matematika sederhana Y = a * X^2 + b.</p>
+          <p><strong>Tugas:</strong></p>
+          <ul class="modal-list">
+            <li>Lakukan analisis sensitivitas untuk menentukan parameter mana (antara a atau b) yang paling berpengaruh terhadap perubahan nilai Y.</li>
+            <li>Jika nilai input a = 5 ± 0.1 dan b = 10 ± 0.5, hitunglah perambatan galat (error propagation) untuk nilai Y pada saat X = 2.</li>
+            <li>Berikan kesimpulan mengenai stabilitas model tersebut terhadap gangguan input (noise).</li>
+          </ul>`
+      },
+      'kisi-uts': {
+        title: "Kisi-Kisi Ujian Tengah Semester (UTS)",
+        html: `
+          <p><strong>Mata Kuliah:</strong> Metode Numerik | <strong>Sifat:</strong> Tertutup</p>
+          <table style="width:100%; border-collapse:collapse; margin-top:10px;">
+            <tr style="background:#4f46e5; color:white;">
+              <th style="padding:10px; border:1px solid #ddd;">Topik Materi</th>
+              <th style="padding:10px; border:1px solid #ddd;">Indikator Soal</th>
+              <th style="padding:10px; border:1px solid #ddd;">Bobot</th>
+            </tr>
+            <tr>
+              <td style="padding:10px; border:1px solid #ddd;">Analisis Galat</td>
+              <td style="padding:10px; border:1px solid #ddd;">Menghitung galat mutlak, relatif, dan perambatan galat aritmatika.</td>
+              <td style="text-align:center; border:1px solid #ddd;">20%</td>
+            </tr>
+            <tr>
+              <td style="padding:10px; border:1px solid #ddd;">Akar Persamaan (Tertutup)</td>
+              <td style="padding:10px; border:1px solid #ddd;">Menerapkan metode Bisection dan Regula Falsi (minimal 3 iterasi manual).</td>
+              <td style="text-align:center; border:1px solid #ddd;">30%</td>
+            </tr>
+            <tr>
+              <td style="padding:10px; border:1px solid #ddd;">Akar Persamaan (Terbuka)</td>
+              <td style="padding:10px; border:1px solid #ddd;">Menyelesaikan masalah non-linear dengan Newton-Raphson & Secant.</td>
+              <td style="text-align:center; border:1px solid #ddd;">30%</td>
+            </tr>
+            <tr>
+              <td style="padding:10px; border:1px solid #ddd;">Interpolasi</td>
+              <td style="padding:10px; border:1px solid #ddd;">Studi kasus interpolasi Lagrange sederhana.</td>
+              <td style="text-align:center; border:1px solid #ddd;">20%</td>
+            </tr>
+          </table>`
+      },
+      'jadwal-presentasi': {
+        title: "Jadwal Presentasi Proyek (Pertemuan 15)",
+        html: `
+          <p><strong>Waktu:</strong> 12.40 - 15.10 WIB (Setiap kelompok 10 menit)</p>
+          <div style="overflow-x:auto;">
+            <table style="width:100%; border-collapse:collapse; margin-top:10px; font-size:0.95rem;">
+              <tr style="background:#f3f4f6;">
+                <th style="padding:8px; border:1px solid #ddd;">Urutan</th>
+                <th style="padding:8px; border:1px solid #ddd;">Kelompok</th>
+                <th style="padding:8px; border:1px solid #ddd;">Waktu</th>
+              </tr>
+              <tr><td style="text-align:center; border:1px solid #ddd;">1</td><td style="text-align:center; border:1px solid #ddd;">Kelompok 1</td><td style="text-align:center; border:1px solid #ddd;">12.40 - 12.50</td></tr>
+              <tr><td style="text-align:center; border:1px solid #ddd;">2</td><td style="text-align:center; border:1px solid #ddd;">Kelompok 2</td><td style="text-align:center; border:1px solid #ddd;">12.50 - 13.00</td></tr>
+              <tr><td style="text-align:center; border:1px solid #ddd;">3</td><td style="text-align:center; border:1px solid #ddd;">Kelompok 3</td><td style="text-align:center; border:1px solid #ddd;">13.00 - 13.10</td></tr>
+              <tr><td style="text-align:center; border:1px solid #ddd;">4</td><td style="text-align:center; border:1px solid #ddd;">Kelompok 4</td><td style="text-align:center; border:1px solid #ddd;">13.10 - 13.20</td></tr>
+              <tr><td style="text-align:center; border:1px solid #ddd;">5</td><td style="text-align:center; border:1px solid #ddd;">Kelompok 5</td><td style="text-align:center; border:1px solid #ddd;">13.20 - 13.30</td></tr>
+              <tr><td style="text-align:center; border:1px solid #ddd;">6</td><td style="text-align:center; border:1px solid #ddd;">Kelompok 6</td><td style="text-align:center; border:1px solid #ddd;">13.30 - 13.40</td></tr>
+              <tr><td style="text-align:center; border:1px solid #ddd;">7</td><td style="text-align:center; border:1px solid #ddd;">Kelompok 7</td><td style="text-align:center; border:1px solid #ddd;">13.40 - 13.50</td></tr>
+              <tr><td style="text-align:center; border:1px solid #ddd;">8</td><td style="text-align:center; border:1px solid #ddd;">Kelompok 8</td><td style="text-align:center; border:1px solid #ddd;">13.50 - 14.00</td></tr>
+              <tr><td style="text-align:center; border:1px solid #ddd;">9</td><td style="text-align:center; border:1px solid #ddd;">Kelompok 9</td><td style="text-align:center; border:1px solid #ddd;">14.00 - 14.10</td></tr>
+              <tr><td style="text-align:center; border:1px solid #ddd;">10</td><td style="text-align:center; border:1px solid #ddd;">Kelompok 10</td><td style="text-align:center; border:1px solid #ddd;">14.10 - 14.20</td></tr>
+              <tr><td style="text-align:center; border:1px solid #ddd;">11</td><td style="text-align:center; border:1px solid #ddd;">Kelompok 11</td><td style="text-align:center; border:1px solid #ddd;">14.20 - 14.30</td></tr>
+              <tr><td style="text-align:center; border:1px solid #ddd;">12</td><td style="text-align:center; border:1px solid #ddd;">Kelompok 12</td><td style="text-align:center; border:1px solid #ddd;">14.30 - 14.40</td></tr>
+              <tr><td style="text-align:center; border:1px solid #ddd;">13</td><td style="text-align:center; border:1px solid #ddd;">Kelompok 13</td><td style="text-align:center; border:1px solid #ddd;">14.40 - 14.50</td></tr>
+              <tr><td style="text-align:center; border:1px solid #ddd;">14</td><td style="text-align:center; border:1px solid #ddd;">Kelompok 14</td><td style="text-align:center; border:1px solid #ddd;">14.50 - 15.00</td></tr>
+              <tr style="background:#e0f2fe; font-weight:bold; color:#0c4a6e;">
+                <td colspan="2" style="text-align:center; border:1px solid #ddd; padding-right:10px;">Masukan Dosen</td>
+                <td style="text-align:center; border:1px solid #ddd;">15.00 - 15.10</td>
+              </tr>
+            </table>
+          </div>`
+      },
+      'ketentuan-uas': {
+        title: "Tata Tertib & Ketentuan UAS",
+        html: `
+          <div style="background:#fff1f2; padding:15px; border-left:4px solid #ef4444; border-radius:4px; margin-bottom:15px; font-size:0.9rem;">
+            <strong>Peringatan:</strong> Segala bentuk kecurangan (mencontek, menggunakan HP) akan dikenakan sanksi nilai E secara otomatis.
+          </div>
+          <p><strong>Ketentuan Umum:</strong></p>
+          <ul class="modal-list" style="padding-left:20px;">
+            <li><strong>Sifat Ujian:</strong> <em>Open Book</em> (Hanya diperbolehkan membuka catatan tulisan tangan sendiri, bukan fotokopi/buku cetak).</li>
+            <li><strong>Waktu Pengerjaan:</strong> 100 Menit.</li>
+            <li><strong>Alat Bantu:</strong> Wajib membawa kalkulator scientific. Penggunaan HP/Laptop sebagai alat hitung <strong>DILARANG KERAS</strong>.</li>
+          </ul>
+          <p style="margin-top:10px;"><strong>Teknis Pengerjaan:</strong></p>
+          <ul class="modal-list" style="padding-left:20px;">
+            <li>Tulis Nama, NIM, dan Kelas di pojok kanan atas lembar jawab.</li>
+            <li>Jawaban harus ditulis dengan tinta hitam/biru yang jelas.</li>
+            <li>Sertakan langkah-langkah perhitungan secara detail (bukan hanya hasil akhir).</li>
+          </ul>`
+      }
+    };
+
+    function showModal(key) {
+      const modal = document.getElementById('infoModal');
+      const title = document.getElementById('modalTitle');
+      const content = document.getElementById('modalContent');
+      
+      const data = contentData[key];
+      if (data) {
+        title.innerText = data.title;
+        content.innerHTML = data.html;
+        modal.classList.add('active');
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('infoModal').classList.remove('active');
+    }
+
+    document.getElementById('infoModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+  </script>
 
 </body>
 </html>

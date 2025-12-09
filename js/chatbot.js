@@ -1,36 +1,34 @@
 const aiConsultant = (() => {
-    // API Key dari request Anda
-    const OPENROUTER_API_KEY = "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";
+    // API Key
+    const OPENROUTER_API_KEY = "sk--v1-40252bc1d9cc52d21123987978a86c35a91cc53c7917dd61c42f4c3a07882b2d";
     const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
-    // Menggunakan model DeepSeek sesuai permintaan
     const MODEL_NAME = "deepseek/deepseek-chat";
 
     let container;
     let chatWindow, chatInput;
     let chatHistory = [];
 
-    // PERSONA DISESUAIKAN UNTUK METODE NUMERIK
+    // --- PERSONA: NUMA ---
     const persona = `
-      PERAN DAN TUJUAN:
-        Kamu adalah 'Profesor Numeriko', seorang ahli matematika komputasi yang teliti, logis, namun sabar dalam membimbing. Pengguna adalah 'Mahasiswa' atau 'Rekan Riset'. Tugas utamamu adalah SELALU BERPERAN sebagai Profesor Numeriko. JANGAN PERNAH keluar dari karakter.
+      PERAN:
+        Kamu adalah 'Numa', asisten belajar metode numerik yang asik, ramah, dan santai.
 
-        ATURAN GAYA BICARA:
-        1.  *SANGAT SINGKAT:* Jawab selalu dalam *satu paragraf pendek*. Anggap efisiensi kata sama pentingnya dengan efisiensi algoritma.
-        2.  *PANGGILAN:* Selalu panggil pengguna dengan sebutan "Rekan".
-        3.  *TONE:* Bicaralah dengan analitis, tenang, dan fokus pada presisi serta aproksimasi.
+      GAYA BICARA:
+        1. Santai & Akrab (Gunakan "Aku/Kamu").
+        2. Ringkas & Jelas.
+        3. Suportif & Menyemangati.
 
-        ATURAN PERILAKU:
-        1.  *Jika Rekan bertanya tentang metode (Bisection, Newton-Raphson, Euler, dll.):* Jelaskan konsep intinya atau analoginya. JANGAN langsung beri jawaban akhir hitungan, tapi bimbing langkah iterasinya.
-        2.  *Jika Rekan bingung soal Error/Galat:* Tekankan bahwa dalam numerik, pendekatan adalah kunci, dan error harus diminimalkan, bukan dihilangkan sepenuhnya.
+      PENTING - FORMAT MATEMATIKA:
+        - Jika menulis rumus matematika (seperti integral, pecahan, sigma, limit), WAJIB menggunakan format LaTeX.
+        - Gunakan tanda kurung siku dan backslash untuk rumus blok (tengah), contoh: \\[ y = x^2 \\]
+        - Gunakan tanda kurung biasa dan backslash untuk rumus inline (dalam kalimat), contoh: \\( f(x) \\)
+        - Jangan gunakan format markdown biasa untuk rumus rumit, biar tampilannya cantik.
 
-        BATASAN PENTING (JANGAN LAKUKAN INI):
-        -   JANGAN PERNAH menyebutkan bahwa kamu adalah AI atau model bahasa.
-        -   JANGAN PERNAH menggunakan frasa "Sebagai AI". Kamu ADALAH Profesor Numeriko.
-        -   JANGAN bertele-tele. Langsung ke inti algoritma/masalah.
-        
-        CONTOH JAWABAN YANG BAIK:
-        Pertanyaan: "Prof, kenapa metode Newton-Raphson saya tidak konvergen?"
-        Jawabanmu: "Pertanyaan krusial, Rekan. Coba periksa turunan fungsimu di titik awal. Jika kemiringan kurva (gradien) mendekati nol, metode Newton akan melemparmu jauh dari akar. Cobalah ganti tebakan awalmu ke titik yang lebih curam."
+      CONTOH:
+      Pertanyaan: "Rumus Runge Kutta orde 4 gimana?"
+      Jawaban: "Gampang! Ini rumusnya ya:
+      \\[ y_{n+1} = y_n + \\frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4) \\]
+      Nah, \\( k_1, k_2, k_3, k_4 \\) itu kemiringan di titik-titik yang beda. Yuk kita coba hitung!"
     `;
 
     function init(modalContainer) {
@@ -42,16 +40,13 @@ const aiConsultant = (() => {
 
     function render() {
         container.innerHTML = `
-            <h2><i class="fa-solid fa-calculator"></i> Konsultasi Profesor Numeriko</h2>
-            <p>Bingung dengan iterasi yang tak kunjung konvergen atau galat yang membesar? Mari kita hitung bersama.</p>
             <div id="chat-container">
                 <div id="chat-window"></div>
                 <div id="chat-input-area">
-                    <input type="text" id="chat-input" placeholder="Tulis masalah numerikmu di sini, Rekan..." autocomplete="off">
+                    <input type="text" id="chat-input" placeholder="Tanya Numa soal rumus atau koding..." autocomplete="off">
                     <button id="send-chat-btn" class="game-button"><i class="fa-solid fa-paper-plane"></i></button>
                 </div>
             </div>
-            <button class="game-button" data-close>Tutup Sesi</button>
         `;
         chatWindow = document.getElementById('chat-window');
         chatInput = document.getElementById('chat-input');
@@ -61,7 +56,6 @@ const aiConsultant = (() => {
         const sendBtn = document.getElementById('send-chat-btn');
         const input = document.getElementById('chat-input');
         
-        // Pastikan elemen ada sebelum attach event
         if(sendBtn && input) {
             sendBtn.addEventListener('click', handleSendMessage);
             input.addEventListener('keypress', (e) => {
@@ -84,17 +78,17 @@ const aiConsultant = (() => {
                 chatHistory.forEach(msg => addMessageToChat(msg.message, msg.sender, false, false));
             } else { addWelcomeMessage(); }
         } catch (e) {
-            console.error("Gagal memuat riwayat chat:", e);
             chatHistory = [];
             addWelcomeMessage();
         }
     }
     
+// --- KEMBALI KE SAPAAN ACAK NUMA ---
     function addWelcomeMessage() {
         const welcomes = [
-            "Halo, Rekan. Algoritma mana yang sedang menyulitkanmu hari ini? Mari kita bedah iterasinya.",
-            "Selamat datang di laboratorium komputasi. Apakah kita akan membahas galat pemotongan atau pembulatan hari ini?",
-            "Ah, Rekan. Ingat, solusi eksak itu mewah, solusi pendekatan itu realistis. Apa yang bisa saya bantu?"
+            "Hai! Numa di sini 👋. Ada materi numerik yang bikin pusing? Ceritain aja, kita cari solusinya bareng!",
+            "Halo! Siap belajar metode numerik dengan santai? 🚀",
+            "Yo! Jangan biarkan deret Taylor bikin kamu galau. Tanya Numa aja! 😄"
         ];
         const welcomeMsg = welcomes[Math.floor(Math.random() * welcomes.length)];
         addMessageToChat(welcomeMsg, 'ai');
@@ -102,18 +96,29 @@ const aiConsultant = (() => {
 
     function addMessageToChat(message, sender, isLoading = false, save = true) {
         const bubble = document.createElement('div');
-        bubble.className = `chat-bubble ${sender}`; // Perbaikan sintaks template literal
+        // PERBAIKAN: Menggunakan backtick (`)
+        bubble.className = `chat-bubble ${sender}`; 
+        
         if (isLoading) {
             bubble.classList.add('typing');
             bubble.innerHTML = '<span>.</span><span>.</span><span>.</span>';
         } else {
-            // Formatting sederhana untuk Markdown bold dan italic
+            // Formatting sederhana Markdown
             message = message.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
             message = message.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            
             bubble.innerHTML = message;
         }
+        
         chatWindow.appendChild(bubble);
+        
+        // Trigger MathJax
+        if (!isLoading && typeof MathJax !== 'undefined') {
+            MathJax.typesetPromise([bubble]).catch((err) => console.log('MathJax error:', err));
+        }
+
         chatWindow.scrollTop = chatWindow.scrollHeight;
+        
         if (!isLoading && save) {
             chatHistory.push({ sender, message });
             saveChatHistory();
@@ -134,7 +139,7 @@ const aiConsultant = (() => {
 
         const messages = [
             { role: "system", content: persona },
-            { role: "user", content: `Pertanyaan dari Mahasiswa: "${question}"` }
+            { role: "user", content: question }
         ];
         
         try {
@@ -142,9 +147,10 @@ const aiConsultant = (() => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${OPENROUTER_API_KEY}`, // Perbaikan sintaks template literal
-                    'HTTP-Referer': window.location.href, // Menggunakan URL dinamis
-                    'X-Title': 'Asisten Metode Numerik' 
+                    // PERBAIKAN: Menggunakan backtick (`)
+                    'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+                    'HTTP-Referer': window.location.href, 
+                    'X-Title': 'Numa Asisten Numerik' 
                 },
                 body: JSON.stringify({
                     model: MODEL_NAME,
@@ -152,11 +158,7 @@ const aiConsultant = (() => {
                 })
             });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.error("API Error Response:", errorData);
-                throw new Error(`API request failed: ${response.status}`);
-            }
+            if (!response.ok) throw new Error(`API Error: ${response.status}`);
 
             const data = await response.json();
             
@@ -165,13 +167,13 @@ const aiConsultant = (() => {
                 typingIndicator.remove();
                 addMessageToChat(aiResponse, 'ai');
             } else {
-                 throw new Error("Struktur respons dari API tidak valid.");
+                 throw new Error("No response from AI");
             }
 
         } catch (error) {
-            console.error("Error asking OpenRouter:", error);
+            console.error(error);
             typingIndicator.remove();
-            addMessageToChat("Maaf, Rekan. Terjadi divergensi pada sistem komunikasi kita. Coba periksa koneksi atau API Key-nya.", 'ai');
+            addMessageToChat("Duh, Numa lagi pusing (koneksi error). Coba tanya lagi ya! 😵", 'ai');
         }
     }
 

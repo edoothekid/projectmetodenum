@@ -7,28 +7,48 @@
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
   <style>
-    /* Styling Sederhana untuk Container Chat */
+    body { background-color: #f8fafc; }
+
+    /* Header Gradient */
+    .chatbot-header {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+      margin-bottom: -40px; 
+      border-radius: 0 0 40px 40px;
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    .chatbot-header h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; }
+    .chatbot-header p { font-size: 1.1rem; opacity: 0.95; }
+
+    /* Container Chat */
     .chat-wrapper {
       max-width: 900px;
-      margin: 40px auto;
+      margin: 0 auto 40px;
       background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       overflow: hidden;
-      min-height: 80vh; /* Agar tinggi */
+      min-height: 70vh;
       padding: 20px;
       position: relative;
+      z-index: 2; 
     }
 
-    /* CSS tambahan agar tampilan chat dari JS terlihat bagus */
     #chat-container {
       display: flex;
       flex-direction: column;
       height: 60vh;
-      margin-top: 20px;
       border: 1px solid #e5e7eb;
-      border-radius: 8px;
+      border-radius: 12px;
+      overflow: hidden;
     }
 
     #chat-window {
@@ -38,53 +58,65 @@
       background: #f9fafb;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 15px;
     }
 
     #chat-input-area {
       display: flex;
-      padding: 10px;
-      border-top: 1px solid #ddd;
+      padding: 15px;
+      border-top: 1px solid #e5e7eb;
       background: white;
+      gap: 10px;
     }
 
     #chat-input {
       flex: 1;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin-right: 10px;
+      padding: 12px 15px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      outline: none;
+      transition: 0.3s;
     }
+    #chat-input:focus { border-color: #f59e0b; }
 
     .game-button {
-      background: #2563eb;
+      background: #f59e0b;
       color: white;
       border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
+      padding: 10px 25px;
+      border-radius: 8px;
       cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
     }
-
-    .game-button:hover { background: #1d4ed8; }
+    .game-button:hover { background: #d97706; }
 
     /* Bubble Chat Styles */
     .chat-bubble {
-      padding: 10px 15px;
-      border-radius: 10px;
-      max-width: 80%;
-      line-height: 1.5;
+      padding: 12px 18px;
+      border-radius: 12px;
+      max-width: 85%;
+      line-height: 1.6;
+      font-size: 0.95rem;
+      position: relative;
+      white-space: pre-wrap;
+      overflow-x: auto;
     }
+    
     .chat-bubble.ai {
-      background: #e0f2fe;
-      color: #0c4a6e;
+      background: #fff7ed;
+      color: #7c2d12;
+      border: 1px solid #ffedd5;
       align-self: flex-start;
+      border-bottom-left-radius: 2px;
     }
     .chat-bubble.user {
-      background: #2563eb;
+      background: #f59e0b;
       color: white;
       align-self: flex-end;
+      border-bottom-right-radius: 2px;
     }
-    .typing { font-style: italic; color: #666; }
+    .typing { font-style: italic; color: #9ca3af; font-size: 0.9rem; margin-left: 10px;}
   </style>
 </head>
 
@@ -95,7 +127,7 @@
       <h2 class="logo">Numerik<span>Lab</span></h2>
       <ul class="nav-links">
         <li><a href="../index.html">Home</a></li>
-        <li><a href="profil.html">Profile MK</a></li>
+        <li><a href="profile.html">Profile MK</a></li>
         <li><a href="modul/pendahuluan.html">Modul</a></li>
         <li><a href="tugas.html">Tugas</a></li>
         <li><a href="pengembang.html">Tim Pengembang</a></li>
@@ -104,8 +136,13 @@
     </div>
   </nav>
 
+  <header class="chatbot-header">
+    <h1>Asisten Cerdas</h1>
+    <p>Tanyakan apa saja seputar Metode Numerik, saya siap membantu Anda belajar.</p>
+  </header>
+
   <div class="chat-wrapper" id="chatbot-main-container">
-    </div>
+  </div>
 
   <script src="../js/chatbot.js"></script>
 
@@ -117,17 +154,20 @@
         if (typeof aiConsultant !== 'undefined') {
             aiConsultant.init(container);
         } else {
-            container.innerHTML = '<p style="color:red; text-align:center;">Gagal memuat sistem AI. Pastikan file js/chatbot.js sudah dibuat.</p>';
+            container.innerHTML = `
+              <div style="text-align:center; padding: 40px;">
+                <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #ef4444; margin-bottom: 20px;"></i>
+                <h3 style="color: #1f2937;">Sistem AI Belum Siap</h3>
+                <p style="color: #6b7280;">Pastikan file <code>js/chatbot.js</code> sudah terhubung dengan benar.</p>
+              </div>
+            `;
         }
-
-        // Tombol tutup (Opsional, redirect ke home)
-        document.addEventListener('click', function(e) {
-            if(e.target && e.target.hasAttribute('data-close')){
-                window.location.href = '../index.html';
-            }
-        });
     });
   </script>
+
+  <footer>
+    <p>&copy; 2025 E-Learning Metode Numerik. Universitas Sebelas Maret.</p>
+  </footer>
 
 </body>
 </html>

@@ -18,10 +18,12 @@
       padding: 80px 20px;
       text-align: center;
       margin-bottom: 50px;
+      border-radius: 0 0 40px 40px;
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
     }
     
-    .dev-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
-    .dev-header p { font-size: 1.1rem; opacity: 0.9; max-width: 700px; margin: 0 auto; }
+    .dev-header h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 800; }
+    .dev-header p { font-size: 1.1rem; opacity: 0.95; max-width: 700px; margin: 0 auto; }
 
     /* Grid Layout */
     .dev-container {
@@ -37,17 +39,23 @@
     /* Card Design */
     .dev-card {
       background: white;
-      border-radius: 16px;
+      border-radius: 20px;
       padding: 40px;
       width: 100%;
       max-width: 350px;
       text-align: center;
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
       transition: transform 0.3s;
       border-top: 5px solid #10b981;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .dev-card:hover { transform: translateY(-10px); }
+    .dev-card:hover { 
+      transform: translateY(-10px); 
+      box-shadow: 0 20px 30px -10px rgba(0,0,0,0.1);
+    }
 
     .dev-avatar {
       width: 150px;
@@ -55,13 +63,13 @@
       margin: 0 auto 20px auto;
       border-radius: 50%;
       overflow: hidden;
-      border: 5px solid #f0fdf4;
+      border: 5px solid #ecfdf5;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     .dev-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-    .dev-name { font-size: 1.4rem; font-weight: 800; color: #1f2937; margin-bottom: 5px; }
+    .dev-name { font-size: 1.3rem; font-weight: 800; color: #1f2937; margin-bottom: 5px; }
     
     .dev-nim {
       display: inline-block;
@@ -69,32 +77,69 @@
       color: #059669;
       padding: 5px 15px;
       border-radius: 20px;
-      font-weight: 600;
+      font-weight: 700; /* Highlight NIM */
       font-size: 0.9rem;
       margin-bottom: 15px;
     }
 
-    .dev-desc { color: #6b7280; line-height: 1.6; font-size: 0.95rem; }
+    .dev-desc { 
+      color: #6b7280; 
+      line-height: 1.6; 
+      font-size: 0.95rem; 
+      margin-bottom: 25px; 
+      text-align: justify; /* Supaya teks panjang terlihat rapi */
+    }
     
-    .social-links { margin-top: 20px; display: flex; justify-content: center; gap: 15px; }
+    .social-links { 
+      display: flex; 
+      justify-content: center; 
+      gap: 15px; 
+      margin-bottom: 20px; 
+    }
     
     .social-links a { 
-      color: #9ca3af; 
-      font-size: 1.5rem; /* Ukuran ikon sedikit diperbesar agar mudah diklik */
+      color: #6b7280; 
+      font-size: 1.2rem;
       transition: 0.3s; 
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 40px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       background-color: #f3f4f6;
+      text-decoration: none;
     }
     
     .social-links a:hover { 
       background-color: #10b981;
       color: white;
       transform: scale(1.1);
+    }
+
+    /* Tombol WhatsApp */
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: #25d366; 
+      color: white;
+      padding: 10px 25px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.95rem;
+      transition: background-color 0.3s, transform 0.2s;
+      width: 100%;
+      max-width: 200px;
+      justify-content: center;
+      margin-top: auto; 
+    }
+
+    .btn-wa:hover {
+      background-color: #1ebc57;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
     }
   </style>
 </head>
@@ -106,7 +151,7 @@
       <h2 class="logo">Numerik<span>Lab</span></h2>
       <ul class="nav-links">
         <li><a href="../index.html">Home</a></li>
-        <li><a href="profil.html">Profile MK</a></li>
+        <li><a href="profile.html">Profile MK</a></li>
         <li><a href="modul/pendahuluan.html">Modul</a></li>
         <li><a href="tugas.html">Tugas</a></li>
         <li><a href="pengembang.html" class="active">Tim Pengembang</a></li> 
@@ -126,22 +171,27 @@
       <div class="dev-avatar">
         <img src="../images/edo.png" alt="Alfredho Fathurrahman" onerror="this.src='https://ui-avatars.com/api/?name=Alfredho+F&background=10b981&color=fff&size=256'">
       </div>
-      <h3 class="dev-name">Alfredho Fathurrahman R. A.</h3>
+      <h3 class="dev-name">Alfredho Fathurrahman Rizquna Ahmadi</h3>
       <span class="dev-nim">NIM. K1323005</span>
       <p class="dev-desc">
-        Mahasiswa aktif S1 Pendidikan Matematika, Universitas Sebelas Maret. Memiliki ketertarikan khusus pada aljabar komputasi dan pengembangan media pembelajaran digital.
+        <strong>Mahasiswa aktif S1 Pendidikan Matematika di Universitas Sebelas Maret.</strong> Memiliki ketertarikan pada aljabar komputasi dan pengembangan media pembelajaran digital, serta aktif mengeksplorasi bagaimana teknologi dapat mendukung proses belajar matematika. Dalam kegiatan akademik, ia sering terlibat dalam proyek yang berkaitan dengan pemodelan numerik dan pembuatan media interaktif sederhana untuk membantu pemahaman konsep matematika.
       </p>
+      
       <div class="social-links">
         <a href="https://instagram.com/king_edoooo" target="_blank" title="Instagram">
           <i class="fab fa-instagram"></i>
         </a>
-        <a href="https://www.linkedin.com/in/alfredho-fathurrahman-rizquna-ahmadi" target="_blank" title="LinkedIn">
+        <a href="https://www.linkedin.com/in/alfredho-fathurrahman-rizquna-ahmadi-375a89316/" target="_blank" title="LinkedIn">
           <i class="fab fa-linkedin"></i>
         </a>
         <a href="mailto:alfredho2302@student.uns.ac.id" title="Email">
           <i class="fas fa-envelope"></i>
         </a>
       </div>
+
+      <a href="https://wa.me/+6285732087835" target="_blank" class="btn-wa">
+        <i class="fab fa-whatsapp"></i> Chat WhatsApp
+      </a>
     </div>
 
     <div class="dev-card">
@@ -151,8 +201,9 @@
       <h3 class="dev-name">Galih Wicaksono</h3>
       <span class="dev-nim">NIM. K1323031</span>
       <p class="dev-desc">
-        Mahasiswa aktif S1 Pendidikan Matematika, Universitas Sebelas Maret. Fokus mendalami penerapan metode numerik dalam pemecahan masalah nyata dan teknologi web.
+        <strong>Mahasiswa aktif S1 Pendidikan Matematika di Universitas Sebelas Maret.</strong> Memiliki minat pada penerapan metode numerik dalam pemecahan masalah nyata dan integrasinya dengan teknologi web. Ia juga tertarik mengeksplorasi bagaimana komputasi modern dapat digunakan untuk menyederhanakan analisis matematika. Dalam kegiatan akademik, Galih kerap terlibat dalam pengembangan media berbasis web dan proyek kecil yang berfokus pada visualisasi data maupun implementasi algoritma numerik untuk mendukung proses pembelajaran.
       </p>
+      
       <div class="social-links">
         <a href="https://instagram.com/galiihw_" target="_blank" title="Instagram">
           <i class="fab fa-instagram"></i>
@@ -161,6 +212,10 @@
           <i class="fas fa-envelope"></i>
         </a>
       </div>
+
+      <a href="https://wa.me/+6285642221670" target="_blank" class="btn-wa">
+        <i class="fab fa-whatsapp"></i> Chat WhatsApp
+      </a>
     </div>
 
   </div>
