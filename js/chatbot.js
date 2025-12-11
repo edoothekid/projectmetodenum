@@ -1,7 +1,7 @@
 const aiConsultant = (() => {
     // API Key
 <<<<<<< HEAD
-    const OPENROUTER_API_KEY = "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";
+    const OPENROUTER_API_KEY = "sk--v1-40252bc1d9cc52d21123987978a86c35a91cc53c7917dd61c42f4c3a07882b2d";
 =======
     const OPENROUTER_API_KEY = "sk---40252bc1d9cc52d21123987978a86c35a91cc53c7917dd61c42f4c3a07882b2d";
 >>>>>>> 15091b0df6728af1cea358db22c3385900153f98
