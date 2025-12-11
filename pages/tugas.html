@@ -11,7 +11,18 @@
   <style>
     body { background-color: #f8fafc; }
 
-    /* Header Gradient Ungu/Indigo */
+    /* --- ANIMASI FADE IN SAAT MASUK --- */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header Gradient */
     .task-header {
       background: linear-gradient(135deg, #4f46e5, #4338ca);
       color: white;
@@ -20,6 +31,9 @@
       margin-bottom: 50px;
       border-radius: 0 0 40px 40px;
       box-shadow: 0 4px 20px rgba(79, 70, 229, 0.2);
+      
+      /* Animasi Header Masuk */
+      animation: fadeInDown 0.8s ease-out;
     }
     
     .task-header h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 800; }
@@ -29,21 +43,20 @@
       max-width: 1200px;
       margin: 0 auto 80px auto;
       padding: 0 20px;
+      
+      /* Animasi Grid Masuk (sedikit telat biar elegan) */
+      animation: fadeInUp 0.8s ease-out 0.2s backwards;
     }
 
     .task-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr); /* 3 Kolom */
+      grid-template-columns: repeat(3, 1fr);
       gap: 30px;
     }
 
     /* Responsif */
-    @media (max-width: 992px) {
-      .task-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 600px) {
-      .task-grid { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 992px) { .task-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .task-grid { grid-template-columns: 1fr; } }
 
     /* CARD STYLE */
     .task-card {
@@ -55,7 +68,7 @@
       transition: transform 0.3s;
       display: flex;
       flex-direction: column;
-      text-align: center; /* UPDATE: Membuat semua teks di dalam kartu rata tengah */
+      text-align: center;
     }
 
     .task-card:hover {
@@ -63,30 +76,17 @@
       box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
     }
 
-    .task-icon { 
-      font-size: 2.5rem; 
-      color: #4f46e5; 
-      margin-bottom: 20px; 
-      /* text-align: center; <- Tidak perlu lagi karena parent sudah center */
-    }
-
+    .task-icon { font-size: 2.5rem; color: #4f46e5; margin-bottom: 20px; }
     .task-title { font-size: 1.3rem; font-weight: bold; color: #1f2937; margin-bottom: 10px; }
     .task-desc { color: #6b7280; font-size: 0.95rem; margin-bottom: 25px; flex-grow: 1; line-height: 1.6; }
     
     .task-meta {
-      font-size: 0.9rem;
-      color: #64748b;
-      font-weight: 600;
-      margin: 0 auto 20px auto; /* Margin auto menjaga box ini tetap di tengah */
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background-color: #f1f5f9;
-      padding: 8px 12px;
-      border-radius: 8px;
-      width: fit-content;
+      font-size: 0.9rem; color: #64748b; font-weight: 600;
+      margin: 0 auto 20px auto; display: flex; align-items: center; gap: 8px;
+      background-color: #f1f5f9; padding: 8px 12px; border-radius: 8px; width: fit-content;
     }
 
+    /* --- ANIMASI TOMBOL KLIK --- */
     .btn-task {
       display: block;
       text-align: center;
@@ -96,50 +96,50 @@
       border-radius: 8px;
       text-decoration: none;
       font-weight: 600;
-      transition: 0.3s;
       cursor: pointer;
       border: none;
       width: 100%;
+      /* Transisi halus */
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .btn-task:hover { background-color: #4f46e5; color: white; }
+    .btn-task:hover { 
+      background-color: #4f46e5; color: white; 
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+    }
 
-    /* --- STYLE MODAL (POP-UP) --- */
+    /* EFEK KLIK: Membal/Mengecil */
+    .btn-task:active {
+      transform: scale(0.95); /* Mengecil 5% */
+      background-color: #4338ca; 
+      box-shadow: none;
+    }
+
+    /* --- ANIMASI MODAL POP-UP --- */
     .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      transition: opacity 0.3s;
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.6); z-index: 9999;
+      justify-content: center; align-items: center;
+      opacity: 0; transition: opacity 0.3s;
     }
 
-    .modal-overlay.active {
-      display: flex;
-      opacity: 1;
-    }
+    .modal-overlay.active { display: flex; opacity: 1; }
 
     .modal-box {
-      background: white;
-      padding: 30px;
-      border-radius: 16px;
-      width: 90%;
-      max-width: 600px;
-      max-height: 80vh;
-      overflow-y: auto;
+      background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 600px;
+      max-height: 80vh; overflow-y: auto;
       box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-      transform: translateY(20px);
-      transition: transform 0.3s;
-      position: relative;
-      text-align: left; /* Kembalikan teks modal jadi rata kiri agar enak dibaca */
+      position: relative; text-align: left;
+      
+      /* Animasi Masuk: Dari bawah & sedikit kecil */
+      transform: translateY(30px) scale(0.9);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* Efek membal elastis */
     }
 
+    /* Saat aktif, modal ke posisi normal */
     .modal-overlay.active .modal-box {
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
     .modal-header-popup {
@@ -148,18 +148,19 @@
     }
 
     .modal-title { font-size: 1.5rem; font-weight: bold; color: #1f2937; }
-    .close-modal { background: none; border: none; font-size: 2rem; line-height: 1; cursor: pointer; color: #6b7280; }
-    .close-modal:hover { color: #ef4444; }
+    .close-modal { background: none; border: none; font-size: 2rem; line-height: 1; cursor: pointer; color: #6b7280; transition: transform 0.2s;}
+    .close-modal:hover { color: #ef4444; transform: rotate(90deg); }
 
     .modal-body { color: #4b5563; line-height: 1.7; font-size: 1rem; }
-    
     .modal-list li { margin-bottom: 10px; margin-left: 20px; }
     
     .modal-btn-action {
       display: inline-block; background: #4f46e5; color: white; 
       padding: 10px 20px; border-radius: 8px; text-decoration: none; margin-top: 15px;
+      transition: transform 0.2s;
     }
-    .modal-btn-action:hover { background: #4338ca; }
+    .modal-btn-action:hover { background: #4338ca; transform: translateY(-2px); }
+    .modal-btn-action:active { transform: scale(0.95); }
 
   </style>
 </head>
@@ -173,6 +174,7 @@
         <li><a href="../index.html">Home</a></li>
         <li><a href="profile.html">Profile MK</a></li>
         <li><a href="modul/pendahuluan.html">Modul</a></li>
+        <li><a href="tools.html">Tools</a></li>
         <li><a href="tugas.html" class="active">Tugas</a></li>
         <li><a href="pengembang.html">Tim Pengembang</a></li> 
         <li><a href="chatbot.html" class="btn-chat-nav"><i class="fas fa-robot"></i> AI Asisten</a></li>

@@ -1,6 +1,6 @@
 const aiConsultant = (() => {
     // API Key
-    const OPENROUTER_API_KEY = "sk--v1-40252bc1d9cc52d21123987978a86c35a91cc53c7917dd61c42f4c3a07882b2d";
+    const OPENROUTER_API_KEY = "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";
     const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
     const MODEL_NAME = "deepseek/deepseek-chat";
 
@@ -83,7 +83,6 @@ const aiConsultant = (() => {
         }
     }
     
-// --- KEMBALI KE SAPAAN ACAK NUMA ---
     function addWelcomeMessage() {
         const welcomes = [
             "Hai! Numa di sini 👋. Ada materi numerik yang bikin pusing? Ceritain aja, kita cari solusinya bareng!",
@@ -96,7 +95,7 @@ const aiConsultant = (() => {
 
     function addMessageToChat(message, sender, isLoading = false, save = true) {
         const bubble = document.createElement('div');
-        // PERBAIKAN: Menggunakan backtick (`)
+        // Backtick diperbaiki
         bubble.className = `chat-bubble ${sender}`; 
         
         if (isLoading) {
@@ -147,7 +146,7 @@ const aiConsultant = (() => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // PERBAIKAN: Menggunakan backtick (`)
+                    // Backtick diperbaiki
                     'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
                     'HTTP-Referer': window.location.href, 
                     'X-Title': 'Numa Asisten Numerik' 

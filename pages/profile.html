@@ -11,6 +11,17 @@
   <style>
     body { background-color: #f8fafc; }
 
+    /* --- ANIMASI FADE IN --- */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     /* --- HEADER BARU (GRADIENT) --- */
     .profile-header {
       background: linear-gradient(135deg, #3b82f6, #2563eb);
@@ -20,6 +31,9 @@
       margin-bottom: 40px;
       border-radius: 0 0 40px 40px;
       box-shadow: 0 4px 20px rgba(37, 99, 235, 0.2);
+      
+      /* Animasi Header Masuk */
+      animation: fadeInDown 0.8s ease-out;
     }
     .profile-header h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 800; }
     .profile-header p { font-size: 1.1rem; opacity: 0.9; }
@@ -29,6 +43,9 @@
       max-width: 1000px;
       margin: 0 auto 60px;
       padding: 0 20px;
+      
+      /* Animasi Konten Masuk (staggered delay) */
+      animation: fadeInUp 0.8s ease-out 0.2s backwards;
     }
 
     /* --- CARD STYLE (KOTAK KONTEN) --- */
@@ -39,9 +56,14 @@
       box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
       margin-bottom: 30px;
       border-top: 4px solid #3b82f6; /* Aksen Biru di atas */
-      transition: transform 0.3s;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .content-section:hover { transform: translateY(-5px); }
+    
+    /* Efek Hover di Section */
+    .content-section:hover { 
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px -5px rgba(0,0,0,0.1);
+    }
 
     .section-title {
       color: #1e40af; 
@@ -110,9 +132,14 @@
       padding: 20px;
       border-radius: 12px;
       border-left: 5px solid #2563eb;
+      transition: transform 0.3s;
     }
+    
+    .book-ref:hover { transform: translateX(5px); }
+
     .book-icon { font-size: 2.5rem; color: #2563eb; margin-top: 5px; }
     
+    /* Tombol Download dengan Animasi Klik */
     .btn-download {
       display: inline-block;
       margin-top: 12px;
@@ -123,9 +150,18 @@
       border-radius: 20px;
       font-size: 0.9rem;
       font-weight: bold;
-      transition: background 0.3s, transform 0.2s;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);
     }
-    .btn-download:hover { background-color: #059669; transform: scale(1.05); }
+    
+    .btn-download:hover { 
+      background-color: #059669; 
+      transform: translateY(-2px);
+      box-shadow: 0 6px 10px rgba(16, 185, 129, 0.4);
+    }
+    
+    /* Efek Klik Membal */
+    .btn-download:active { transform: scale(0.95); box-shadow: none; }
 
     /* List Buku Tambahan */
     .book-list {
@@ -149,6 +185,7 @@
 
     /* --- DOSEN CARD --- */
     .lecturer-grid { display: flex; justify-content: center; margin-top: 10px; }
+    
     .lecturer-card {
       background: #f8fafc; 
       border: 1px solid #e2e8f0; 
@@ -157,7 +194,14 @@
       text-align: center; 
       max-width: 320px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      transition: transform 0.3s;
     }
+    
+    .lecturer-card:hover { 
+      transform: translateY(-5px); 
+      box-shadow: 0 10px 15px rgba(0,0,0,0.1); 
+    }
+
     .lecturer-img {
       width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
       margin-bottom: 15px; border: 4px solid #3b82f6;
@@ -174,6 +218,7 @@
         <li><a href="../index.html">Home</a></li>
         <li><a href="profile.html" class="active">Profile MK</a></li>
         <li><a href="modul/pendahuluan.html">Modul</a></li>
+        <li><a href="pages/tools.html">Tools</a></li>
         <li><a href="tugas.html">Tugas</a></li>
         <li><a href="pengembang.html">Tim Pengembang</a></li>
         <li><a href="chatbot.html" class="btn-chat-nav"><i class="fas fa-robot"></i> AI Asisten</a></li>
@@ -238,12 +283,12 @@
             </tr>
             <tr>
               <td>14 - 15</td>
-              <td>Mampu menganalisis sensitivitas nilai fungsi terhadap eror/galat : pengaruh eror/galat pada pendekatan nilai fungsi terhadap hasil akhir pendekatan solusi permasalahan dan mencari nilai optimal hasil akhir pendekatan solusi permasalahan berdasarkan hasil analisis sensitivitas</td>
+              <td>Mampu menganalisis sensitivitas nilai fungsi terhadap eror/galat</td>
               <td>Analisis sensitivitas nilai fungsi terhadap eror/galat, nilai optimal hasil akhir pendekatan berdasarkan hasil analisis sensitivitas</td>
             </tr>
             <tr>
               <td>16</td>
-              <td>Mahasiswa mampu menemukan solusi numerik dari permasalahan integral, diferensial, dan analisis sensitivitas nilai fungsi terhadap eror/galat yang lebih kompleks</td>
+              <td>Mahasiswa mampu menemukan solusi numerik dari permasalahan integral, diferensial, dan analisis sensitivitas</td>
               <td>Solusi numerik permasalahan integral, diferensial, dan analisis sensitivitas nilai fungsi terhadap eror/galat</td>
             </tr>
           </tbody>

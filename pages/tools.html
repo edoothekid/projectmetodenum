@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab Maya - Metode Numerik</title>
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+
+  <style>
+    body { background-color: #f8fafc; }
+
+    /* HEADER BIRU */
+    .tools-header {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white; padding: 80px 20px; text-align: center; margin-bottom: 30px;
+      border-radius: 0 0 40px 40px; box-shadow: 0 4px 20px rgba(37, 99, 235, 0.2);
+    }
+    .tools-header h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; }
+    .tools-header p { font-size: 1.1rem; opacity: 0.95; }
+
+    /* --- NAVIGASI TAB (MENU PILIHAN) --- */
+    .tool-nav {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      padding: 0 20px;
+    }
+
+    .tool-link {
+      background: white;
+      color: #64748b;
+      cursor: pointer;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-weight: 700;
+      border: 1px solid #e2e8f0;
+      transition: all 0.3s ease;
+      display: flex; align-items: center; gap: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+
+    .tool-link:hover {
+      background: #eff6ff; color: #2563eb; transform: translateY(-2px);
+    }
+
+    /* Style untuk Tab yang Sedang Aktif */
+    .tool-link.active {
+      background: #2563eb;
+      color: white;
+      border-color: #2563eb;
+      box-shadow: 0 8px 15px rgba(37, 99, 235, 0.3);
+    }
+
+    /* --- CONTAINER UTAMA --- */
+    .tools-container {
+      max-width: 1100px; margin: 0 auto 80px auto; padding: 0 20px;
+      min-height: 500px; /* Agar footer tidak naik turun drastis */
+    }
+
+    /* --- TAB SECTION (LOGIKA SHOW/HIDE) --- */
+    .tool-section {
+      display: none; /* Default sembunyi */
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    .tool-section.active {
+      display: block; /* Muncul jika ada class active */
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Card Style */
+    .tool-card {
+      background: white; border-radius: 20px; padding: 35px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-top: 5px solid #2563eb;
+    }
+
+    .tool-title {
+      font-size: 1.5rem; color: #1e3a8a; font-weight: 700; margin-bottom: 15px;
+      border-bottom: 2px solid #eff6ff; padding-bottom: 10px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .tool-desc { color: #64748b; margin-bottom: 25px; font-size: 0.95rem; }
+
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-weight: 600; color: #374151; margin-bottom: 5px; }
+    .form-control {
+      width: 100%; padding: 10px 15px; border: 2px solid #e5e7eb; border-radius: 8px;
+      font-size: 1rem; transition: 0.3s;
+    }
+    .form-control:focus { border-color: #2563eb; outline: none; }
+
+    .btn-action {
+      background: #2563eb; color: white; border: none; padding: 12px 25px;
+      border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s;
+      width: 100%; margin-top: 10px;
+    }
+    .btn-action:hover { background: #1e40af; transform: translateY(-2px); }
+    
+    .btn-secondary { background: #64748b; margin-top: 10px; }
+    .btn-secondary:hover { background: #475569; }
+
+    .result-box {
+      margin-top: 30px; padding: 20px; background: #f8fafc; border-radius: 12px;
+      border: 1px solid #e2e8f0; display: none;
+    }
+    
+    .chart-container { position: relative; height: 350px; width: 100%; margin-bottom: 30px; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9rem; }
+    th, td { border: 1px solid #cbd5e1; padding: 10px; text-align: center; }
+    th { background-color: #2563eb; color: white; }
+    tr:nth-child(even) { background-color: #f1f5f9; }
+
+    .coord-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; margin-bottom: 10px; }
+
+    .conclusion-box {
+      background-color: #dbeafe; color: #1e40af; padding: 15px; border-radius: 8px;
+      margin-top: 20px; border-left: 5px solid #2563eb; font-weight: 600;
+    }
+    .equation-box {
+      background-color: #fff7ed; color: #9a3412; padding: 15px; border-radius: 8px;
+      margin-bottom: 20px; border: 1px dashed #f97316; font-family: monospace; font-size: 1.1rem;
+      overflow-x: auto;
+    }
+    .prediction-section {
+      background: #f0fdf4; padding: 20px; border-radius: 10px; border: 1px solid #bbf7d0; margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <h2 class="logo">Numerik<span>Lab</span></h2>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="profile.html">Profile MK</a></li>
+        <li><a href="modul/pendahuluan.html">Modul</a></li>
+        <li><a href="tools.html" class="active">Tools</a></li>
+        <li><a href="tugas.html">Tugas</a></li>
+        <li><a href="pengembang.html">Tim Pengembang</a></li>
+        <li><a href="chatbot.html" class="btn-chat-nav"><i class="fas fa-robot"></i> AI Asisten</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="tools-header">
+    <h1>Laboratorium Maya</h1>
+    <p>Simulasi dan kalkulator interaktif untuk mempermudah pemahaman Metode Numerik.</p>
+  </header>
+
+  <div class="tool-nav">
+    <div class="tool-link active" onclick="switchTab('biseksi', this)">
+      <i class="fas fa-wave-square"></i> Metode Biseksi
+    </div>
+    <div class="tool-link" onclick="switchTab('interpolasi', this)">
+      <i class="fas fa-draw-polygon"></i> Interpolasi Newton
+    </div>
+    <div class="tool-link" onclick="switchTab('error-calc', this)">
+      <i class="fas fa-calculator"></i> Kalkulator Error
+    </div>
+  </div>
+
+  <div class="tools-container">
+
+    <div id="biseksi" class="tool-section active">
+      <section class="tool-card">
+        <div class="tool-title"><i class="fas fa-wave-square"></i> Visualisasi Metode Biseksi</div>
+        <p class="tool-desc">Cari akar persamaan non-linear f(x) = 0. Masukkan fungsi, batas interval, dan toleransi.</p>
+
+        <div class="form-group">
+          <label>Fungsi f(x)</label>
+          <input type="text" id="funcInput" class="form-control" placeholder="Contoh: x^2 - 4">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+          <div class="form-group">
+            <label>Batas Bawah (a)</label>
+            <input type="number" id="aInput" class="form-control" value="0">
+          </div>
+          <div class="form-group">
+            <label>Batas Atas (b)</label>
+            <input type="number" id="bInput" class="form-control" value="3">
+          </div>
+          <div class="form-group">
+            <label>Toleransi (e)</label>
+            <input type="number" id="tolInput" class="form-control" value="0.001" step="0.0001">
+          </div>
+        </div>
+        <button class="btn-action" onclick="hitungBiseksi()">Hitung & Visualisasikan</button>
+
+        <div id="resultBiseksi" class="result-box">
+          <h4><i class="fas fa-chart-line"></i> Grafik Fungsi & Posisi Akar</h4>
+          <div class="chart-container">
+            <canvas id="biseksiChart"></canvas>
+          </div>
+          <div id="kesimpulanBiseksi" class="conclusion-box"></div>
+          <h4 style="margin-top:20px;"><i class="fas fa-table"></i> Tabel Iterasi</h4>
+          <div style="overflow-x: auto;">
+            <table id="tabelBiseksi">
+              <thead>
+                <tr><th>Iterasi</th><th>a</th><th>b</th><th>m (Tengah)</th><th>f(m)</th><th>Error</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div id="interpolasi" class="tool-section">
+      <section class="tool-card">
+        <div class="tool-title"><i class="fas fa-draw-polygon"></i> Interpolasi Polinomial Newton</div>
+        <p class="tool-desc">Masukkan pasangan titik data (x, y) untuk membentuk kurva. <strong>Prediksi hanya untuk rentang data internal.</strong></p>
+
+        <div id="pointsContainer">
+          <div class="coord-grid">
+            <input type="number" class="form-control input-x" placeholder="x0">
+            <input type="number" class="form-control input-y" placeholder="y0">
+            <button class="btn-action btn-secondary" style="margin:0; width:auto;" disabled><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        
+        <button class="btn-action btn-secondary" onclick="tambahTitik()" style="width: auto; display: inline-block;">+ Tambah Titik</button>
+        <button class="btn-action" onclick="hitungInterpolasi()" style="margin-top: 15px;">Buat Polinomial</button>
+
+        <div id="resultInterpolasi" class="result-box">
+          <h4 style="margin-top:0;"><i class="fas fa-list-ol"></i> Tabel Beda Terbagi (Divided Difference)</h4>
+          <div style="overflow-x: auto; margin-bottom: 25px;">
+            <table id="tabelDividedDiff">
+              <thead></thead><tbody></tbody>
+            </table>
+          </div>
+
+          <h4><i class="fas fa-superscript"></i> Polinomial yang Terbentuk:</h4>
+          <div id="persamaanNewton" class="equation-box">Belum dihitung...</div>
+
+          <h4><i class="fas fa-bezier-curve"></i> Grafik Interpolasi</h4>
+          <div class="chart-container">
+            <canvas id="interpolasiChart"></canvas>
+          </div>
+
+          <div class="prediction-section">
+            <h4 style="color: #059669; margin-bottom:10px;"><i class="fas fa-search-plus"></i> Uji Titik (Interpolasi Internal)</h4>
+            <div style="display:flex; gap:10px; align-items:center;">
+              <label style="font-weight:bold;">Input Nilai x:</label>
+              <input type="number" id="prediksiX" class="form-control" style="width:150px;" placeholder="Masukkan x">
+              <button class="btn-action" style="margin:0; width:auto;" onclick="hitungPrediksi()">Cari y</button>
+            </div>
+            <div id="hasilPrediksi" style="margin-top:10px; font-weight:bold; color:#1e3a8a;"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div id="error-calc" class="tool-section">
+      <section class="tool-card">
+        <div class="tool-title"><i class="fas fa-calculator"></i> Kalkulator Galat (Error)</div>
+        <p class="tool-desc">Hitung Galat Mutlak, Galat Relatif, dan Galat Persentase secara instan.</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div class="form-group">
+            <label>Nilai Sebenarnya</label>
+            <input type="number" id="trueVal" class="form-control" placeholder="Contoh: 3.14159">
+          </div>
+          <div class="form-group">
+            <label>Nilai Aproksimasi</label>
+            <input type="number" id="approxVal" class="form-control" placeholder="Contoh: 3.14">
+          </div>
+        </div>
+        <button class="btn-action" onclick="hitungError()">Hitung Error</button>
+
+        <div id="resultError" class="result-box" style="text-align: center;">
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+              <div style="color:#64748b; font-size:0.9rem;">Absolute Error</div>
+              <div id="absErr" style="font-size: 1.2rem; font-weight: bold; color: #2563eb;">-</div>
+            </div>
+            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+              <div style="color:#64748b; font-size:0.9rem;">Relative Error</div>
+              <div id="relErr" style="font-size: 1.2rem; font-weight: bold; color: #d97706;">-</div>
+            </div>
+            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+              <div style="color:#64748b; font-size:0.9rem;">Percentage Error</div>
+              <div id="percErr" style="font-size: 1.2rem; font-weight: bold; color: #059669;">-</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2025 E-Learning Metode Numerik. Universitas Sebelas Maret.</p>
+  </footer>
+
+  <script>
+    Chart.defaults.plugins.tooltip.callbacks.title = function() { return null; };
+
+    // --- LOGIKA TAB SWITCHER ---
+    function switchTab(tabId, element) {
+      // 1. Sembunyikan semua section
+      document.querySelectorAll('.tool-section').forEach(sec => {
+        sec.classList.remove('active');
+      });
+
+      // 2. Hilangkan class active dari semua tombol
+      document.querySelectorAll('.tool-link').forEach(link => {
+        link.classList.remove('active');
+      });
+
+      // 3. Munculkan section yang dipilih
+      document.getElementById(tabId).classList.add('active');
+
+      // 4. Aktifkan tombol yang diklik
+      element.classList.add('active');
+    }
+
+    // --- VARIABEL GLOBAL ---
+    let biseksiChartInstance = null;
+    let interpolasiChartInstance = null;
+    let globalX = [];
+    let globalDivDiff = []; 
+    let globalN = 0;
+
+    // --- BISEKSI ---
+    function hitungBiseksi() {
+      const funcStr = document.getElementById('funcInput').value;
+      let a = parseFloat(document.getElementById('aInput').value);
+      let b = parseFloat(document.getElementById('bInput').value);
+      const tol = parseFloat(document.getElementById('tolInput').value);
+
+      if (!funcStr || isNaN(a) || isNaN(b)) { alert("Data tidak valid!"); return; }
+
+      let f; try { f = math.compile(funcStr); } catch (e) { alert("Format salah!"); return; }
+      const evalF = (x) => f.evaluate({x: x});
+
+      if (evalF(a) * evalF(b) >= 0) {
+        alert("Tebakan awal salah! f(a) dan f(b) harus beda tanda.");
+        return;
+      }
+
+      let m = 0, iter = 0, maxIter = 50, error = Math.abs(b - a);
+      const tbody = document.querySelector('#tabelBiseksi tbody');
+      tbody.innerHTML = '';
+
+      while (error > tol && iter < maxIter) {
+        iter++;
+        m = (a + b) / 2;
+        let fm = evalF(m);
+        
+        tbody.innerHTML += `<tr><td>${iter}</td><td>${a.toFixed(5)}</td><td>${b.toFixed(5)}</td><td>${m.toFixed(5)}</td><td>${fm.toFixed(5)}</td><td>${error.toFixed(5)}</td></tr>`;
+
+        if (evalF(a) * fm < 0) b = m; else a = m;
+        error = Math.abs(b - a);
+      }
+
+      document.getElementById('resultBiseksi').style.display = 'block';
+      document.getElementById('kesimpulanBiseksi').innerHTML = `<i class="fas fa-check-circle"></i> Akar hampiran adalah <strong>${m.toFixed(6)}</strong> (Iterasi ke-${iter}).`;
+      
+      const origA = parseFloat(document.getElementById('aInput').value);
+      const origB = parseFloat(document.getElementById('bInput').value);
+      gambarGrafikBiseksi(f, origA, origB, m);
+    }
+
+    function gambarGrafikBiseksi(compiledFunc, startA, startB, finalRoot) {
+      const ctx = document.getElementById('biseksiChart').getContext('2d');
+      const labels = [], dataPoints = [];
+      const padding = Math.abs(startB - startA) * 0.5;
+      const minX = Math.min(startA, startB) - padding;
+      const maxX = Math.max(startA, startB) + padding;
+      const step = (maxX - minX) / 100;
+
+      for (let x = minX; x <= maxX; x += step) {
+        labels.push(x.toFixed(2));
+        dataPoints.push(compiledFunc.evaluate({x: x}));
+      }
+
+      if (biseksiChartInstance) biseksiChartInstance.destroy();
+      biseksiChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            { label: 'f(x)', data: dataPoints, borderColor: '#2563eb', borderWidth: 2, pointRadius: 0, fill: false },
+            { label: 'Akar (m)', data: [{x: finalRoot, y: 0}], borderColor: '#d97706', backgroundColor: '#d97706', pointRadius: 8, type: 'scatter' }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          scales: { x: { type: 'linear', position: 'bottom', min: minX, max: maxX }, y: { grid: { color: c=>c.tick.value===0?'#000':'#ddd' } } }
+        }
+      });
+    }
+
+    // --- INTERPOLASI ---
+    window.onload = function() { tambahTitik(); tambahTitik(); };
+    function tambahTitik() {
+      const div = document.createElement('div'); div.className = 'coord-grid';
+      div.innerHTML = `<input type="number" class="form-control input-x" placeholder="x"><input type="number" class="form-control input-y" placeholder="y"><button class="btn-action btn-secondary" style="margin:0; width:auto; background:#ef4444;" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i></button>`;
+      document.getElementById('pointsContainer').appendChild(div);
+    }
+
+    function hitungInterpolasi() {
+      const xInputs = document.querySelectorAll('.input-x');
+      const yInputs = document.querySelectorAll('.input-y');
+      globalX = []; let Y = [];
+      xInputs.forEach((inp, i) => { if(inp.value !== '' && yInputs[i].value !== '') { globalX.push(parseFloat(inp.value)); Y.push(parseFloat(yInputs[i].value)); } });
+
+      if (globalX.length < 2) { alert("Minimal 2 titik!"); return; }
+
+      globalN = globalX.length;
+      globalDivDiff = Array(globalN).fill(0).map(() => Array(globalN).fill(0));
+      for (let i = 0; i < globalN; i++) globalDivDiff[i][0] = Y[i];
+      for (let j = 1; j < globalN; j++) {
+        for (let i = 0; i < globalN - j; i++) {
+          globalDivDiff[i][j] = (globalDivDiff[i+1][j-1] - globalDivDiff[i][j-1]) / (globalX[i+j] - globalX[i]);
+        }
+      }
+
+      let eq = `f(x) = ${globalDivDiff[0][0].toFixed(3)}`;
+      for (let i = 1; i < globalN; i++) {
+        let coef = globalDivDiff[0][i]; if (Math.abs(coef)<1e-5) continue;
+        eq += (coef>=0 ? " + " : " - ") + Math.abs(coef).toFixed(3);
+        for (let j=0; j<i; j++) eq += `(x ${globalX[j]>=0?"-":"+"} ${Math.abs(globalX[j])})`;
+      }
+      document.getElementById('persamaanNewton').innerText = eq;
+
+      let head = '<tr><th>x</th><th>y</th>'; for(let k=1;k<globalN;k++) head+=`<th>Ord-${k}</th>`;
+      document.querySelector('#tabelDividedDiff thead').innerHTML = head + '</tr>';
+      let body = '';
+      for(let i=0; i<globalN; i++) {
+        body += `<tr><td>${globalX[i]}</td>`;
+        for(let j=0; j<globalN-i; j++) body += `<td>${globalDivDiff[i][j].toFixed(4)}</td>`;
+        for(let k=0; k<i; k++) body += `<td></td>`; 
+        body += `</tr>`;
+      }
+      document.querySelector('#tabelDividedDiff tbody').innerHTML = body;
+      document.getElementById('resultInterpolasi').style.display = 'block';
+      gambarGrafikInterpolasi(globalX, Y);
+    }
+
+    function evalNewton(val) {
+      let res = globalDivDiff[0][0];
+      for (let i = 1; i < globalN; i++) {
+        let term = globalDivDiff[0][i];
+        for (let j = 0; j < i; j++) term *= (val - globalX[j]);
+        res += term;
+      }
+      return res;
+    }
+
+    function hitungPrediksi() {
+      const xVal = parseFloat(document.getElementById('prediksiX').value);
+      if(isNaN(xVal)) { alert("Masukkan x!"); return; }
+
+      const minX = Math.min(...globalX);
+      const maxX = Math.max(...globalX);
+
+      if (xVal < minX || xVal > maxX) {
+        document.getElementById('hasilPrediksi').innerHTML = 
+          `<span style="color:#ef4444;"><i class="fas fa-exclamation-triangle"></i> Error: Nilai x=${xVal} berada di luar rentang data (${minX} s.d ${maxX}).<br>Silakan masukkan nilai di dalam rentang tersebut (Interpolasi Internal).</span>`;
+        return;
+      }
+
+      const yVal = evalNewton(xVal);
+      document.getElementById('hasilPrediksi').innerHTML = 
+        `Hasil Prediksi: Pada x = ${xVal}, nilai y ≈ <span style="background:#fef08a; padding:2px 5px;">${yVal.toFixed(5)}</span>`;
+    }
+
+    function gambarGrafikInterpolasi(X, Y) {
+      const ctx = document.getElementById('interpolasiChart').getContext('2d');
+      const sortedX = [...X].sort((a,b)=>a-b);
+      const minX = sortedX[0] - 1, maxX = sortedX[sortedX.length-1] + 1;
+      const curve = [], scatter = X.map((x,i)=>({x, y:Y[i]}));
+      for(let x=minX; x<=maxX; x+=0.1) curve.push({x, y:evalNewton(x)});
+
+      if (interpolasiChartInstance) interpolasiChartInstance.destroy();
+      interpolasiChartInstance = new Chart(ctx, {
+        type: 'scatter',
+        data: {
+          datasets: [
+            { label: 'Titik Data', data: scatter, backgroundColor: '#d97706', pointRadius: 6 },
+            { label: 'Polinomial', data: curve, borderColor: '#059669', borderWidth: 2, pointRadius: 0, showLine: true, fill: false }
+          ]
+        },
+        options: { responsive: true, maintainAspectRatio: false, scales: { x: { type: 'linear', position: 'bottom' } } }
+      });
+    }
+
+    // --- ERROR CALC ---
+    function hitungError() {
+      const t = parseFloat(document.getElementById('trueVal').value);
+      const a = parseFloat(document.getElementById('approxVal').value);
+      if(isNaN(t)||isNaN(a)) { alert("Angka tidak valid"); return; }
+      const abs = Math.abs(t-a), rel = abs/Math.abs(t);
+      document.getElementById('resultError').style.display='block';
+      document.getElementById('absErr').innerText = abs.toFixed(5);
+      document.getElementById('relErr').innerText = rel.toFixed(5);
+      document.getElementById('percErr').innerText = (rel*100).toFixed(4)+" %";
+    }
+  </script>
+</body>
+</html>

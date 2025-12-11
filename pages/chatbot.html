@@ -91,7 +91,7 @@
     }
     .game-button:hover { background: #d97706; }
 
-    /* Bubble Chat Styles */
+    /* Bubble Chat Styles - DIPERBARUI */
     .chat-bubble {
       padding: 12px 18px;
       border-radius: 12px;
@@ -99,8 +99,10 @@
       line-height: 1.6;
       font-size: 0.95rem;
       position: relative;
-      white-space: pre-wrap;
-      overflow-x: auto;
+      
+      /* Agar teks turun ke bawah (wrapping) dan tidak scroll ke samping */
+      white-space: pre-wrap; 
+      word-wrap: break-word; 
     }
     
     .chat-bubble.ai {
@@ -129,6 +131,7 @@
         <li><a href="../index.html">Home</a></li>
         <li><a href="profile.html">Profile MK</a></li>
         <li><a href="modul/pendahuluan.html">Modul</a></li>
+        <li><a href="pages/tools.html">Tools</a></li>
         <li><a href="tugas.html">Tugas</a></li>
         <li><a href="pengembang.html">Tim Pengembang</a></li>
         <li><a href="chatbot.html" class="active btn-chat-nav"><i class="fas fa-robot"></i> AI Asisten</a></li>

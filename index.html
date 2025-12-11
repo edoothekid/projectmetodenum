@@ -12,50 +12,83 @@
     /* Style Khusus Home agar senada dengan Tim Pengembang */
     body { background-color: #f8fafc; }
 
+    /* --- DEFINISI ANIMASI FADE IN --- */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     /* Header Gradient Modern */
     .home-header {
       background: linear-gradient(135deg, #2563eb, #1e40af); /* Biru Modern */
       color: white;
-      padding: 100px 20px 80px;
+      padding: 80px 20px;
       text-align: center;
-      border-radius: 0 0 50px 50px; /* Lengkungan bawah yang estetis */
-      margin-bottom: 50px;
+      border-radius: 0 0 50px 50px;
+      margin-bottom: 40px;
       box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+      
+      /* ANIMASI HEADER */
+      animation: fadeInUp 1s ease-out;
     }
 
     .home-header h1 { 
       font-size: 3.5rem; 
       font-weight: 800; 
-      margin-bottom: 15px; 
+      margin-bottom: 0; 
       text-transform: uppercase;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       text-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
     
-    .home-header p { 
-      font-size: 1.2rem; 
-      opacity: 0.95; 
-      max-width: 800px; 
-      margin: 0 auto; 
+    /* Style untuk Deskripsi di Luar Header */
+    .intro-text {
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto 50px;
+      padding: 0 20px;
+      color: #4b5563;
       line-height: 1.8;
-      text-align: justify; /* UBAH: Teks dibuat rata kiri-kanan */
+      font-size: 1.1rem;
+      
+      /* Animasi muncul setelah header */
+      animation: fadeInUp 1s ease-out 0.2s backwards;
     }
+
+    .intro-text p { margin-bottom: 15px; text-align: justify; }
 
     /* Container Kartu Menu */
     .home-container {
-      max-width: 1000px;
-      margin: 0 auto 60px;
+      max-width: 1200px; /* Diperlebar sedikit agar muat 4 kolom */
+      margin: 0 auto 80px;
       padding: 0 20px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
+      
+      /* UBAH DISINI: Memaksa 4 kolom (1 baris) */
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+
+      /* ANIMASI CONTAINER */
+      animation: fadeInUp 1s ease-out 0.4s backwards; 
     }
 
-    /* Card Menu Style (Mirip Tim Pengembang) */
+    /* RESPONSIF: Agar rapi di layar kecil */
+    @media (max-width: 992px) {
+      .home-container {
+        grid-template-columns: repeat(2, 1fr); /* Tablet: 2 Baris (2x2) */
+      }
+    }
+    @media (max-width: 600px) {
+      .home-container {
+        grid-template-columns: 1fr; /* HP: 1 Kolom ke bawah */
+      }
+    }
+
+    /* Card Menu Style */
     .menu-card {
       background: white;
       border-radius: 20px;
-      padding: 30px;
+      padding: 30px 20px;
       text-align: center;
       transition: transform 0.3s, box-shadow 0.3s;
       box-shadow: 0 10px 20px rgba(0,0,0,0.05);
@@ -92,8 +125,8 @@
       color: white;
     }
 
-    .menu-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; }
-    .menu-desc { font-size: 0.95rem; color: #6b7280; line-height: 1.5; }
+    .menu-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+    .menu-desc { font-size: 0.9rem; color: #6b7280; line-height: 1.5; }
   </style>
 </head>
 
@@ -106,6 +139,7 @@
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="pages/profile.html">Profile MK</a></li>
         <li><a href="pages/modul/pendahuluan.html">Modul</a></li>
+        <li><a href="pages/tools.html">Tools</a></li>
         <li><a href="pages/tugas.html">Tugas</a></li>
         <li><a href="pages/pengembang.html">Tim Pengembang</a></li>
         <li><a href="pages/chatbot.html" class="btn-chat-nav"><i class="fas fa-robot"></i> AI Asisten</a></li>
@@ -115,14 +149,16 @@
 
   <header class="home-header">
     <h1>NumerikLab</h1>
+  </header>
+
+  <div class="intro-text">
     <p>
       Selamat datang di platform E-Learning Metode Numerik, sebuah media pembelajaran interaktif yang dirancang untuk membantu menghubungkan konsep matematika dengan penerapannya dalam komputasi modern. Di dalamnya tersedia materi yang tersusun rapi, mulai dari analisis galat, pencarian akar persamaan, hingga integrasi numerik, sehingga Anda dapat memahami bagaimana berbagai masalah matematis dapat diselesaikan secara efektif.
     </p>
-    <br>
     <p>      
       Melalui modul yang terstruktur dengan jelas, latihan soal yang menyesuaikan kemampuan, serta dukungan <strong>Chatbot AI Cerdas</strong>, Anda dapat belajar secara mandiri dan perlahan membangun pemahaman yang kuat mengenai algoritma numerik. Pendekatan ini memungkinkan Anda melihat bagaimana metode numerik digunakan dalam berbagai contoh nyata, terutama di bidang sains dan teknik, tanpa membuat proses belajarnya terasa berat.
     </p>
-  </header>
+  </div>
 
   <div class="home-container">
     
@@ -138,6 +174,12 @@
       <p class="menu-desc">Informasi silabus, capaian pembelajaran, dan sistem penilaian mata kuliah.</p>
     </a>
 
+    <a href="pages/tools.html" class="menu-card">
+      <div class="icon-wrapper"><i class="fas fa-flask"></i></div>
+      <h3 class="menu-title">Lab Maya</h3>
+      <p class="menu-desc">Simulasi visual metode Biseksi, Interpolasi, dan Kalkulator Error interaktif.</p>
+    </a>
+
     <a href="pages/chatbot.html" class="menu-card">
       <div class="icon-wrapper"><i class="fas fa-robot"></i></div>
       <h3 class="menu-title">Tanya AI</h3>
@@ -146,5 +188,9 @@
 
   </div>
 
+  <footer>
+    <p>&copy; 2025 E-Learning Metode Numerik. Universitas Sebelas Maret.</p>
+  </footer>
+  
 </body>
 </html>
