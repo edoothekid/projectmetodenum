@@ -1,6 +1,14 @@
 const aiConsultant = (() => {
     // API Key
+<<<<<<< HEAD
     const OPENROUTER_API_KEY = "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";
+=======
+<<<<<<< HEAD
+    const OPENROUTER_API_KEY = "sk--v1-40252bc1d9cc52d21123987978a86c35a91cc53c7917dd61c42f4c3a07882b2d";
+=======
+    const OPENROUTER_API_KEY = "sk---40252bc1d9cc52d21123987978a86c35a91cc53c7917dd61c42f4c3a07882b2d";
+>>>>>>> 15091b0df6728af1cea358db22c3385900153f98
+>>>>>>> 6fac0af431598efc7cc4539f6551bbafafb98fca
     const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
     const MODEL_NAME = "deepseek/deepseek-chat";
 
